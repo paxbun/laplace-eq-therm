@@ -10,3 +10,4 @@ license = "MIT"
 [dependencies]
 laplace-eq-therm = { path = ".." }
 laplace-eq-therm-client-common = { path = "../client-common" }
+serialport = "4.0.1"
