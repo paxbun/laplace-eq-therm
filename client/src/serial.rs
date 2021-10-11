@@ -5,6 +5,7 @@
 
 use serialport::SerialPort;
 
+/// Represents an Arduino device.
 pub struct Arduino {
     port: Box<dyn SerialPort>,
 }
