@@ -1,10 +1,10 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-use rocket::{
-    http::{ContentType, Status},
-    Response,
-};
+//! Implements static resource endpoint handling.
+
+use rocket::http::{ContentType, Status};
+use rocket::Response;
 use std::io::Cursor;
 
 macro_rules! include_static_resources {
