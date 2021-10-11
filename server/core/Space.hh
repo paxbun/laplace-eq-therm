@@ -5,7 +5,6 @@
 #define LAPLACE_EQ_THERM_SERVER_CORE_SPACE_HH
 
 #include <cstdint>
-#include <span>
 
 using ErrorCode = uint32_t;
 
