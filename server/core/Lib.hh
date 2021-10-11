@@ -58,6 +58,16 @@ extern "C"
     /// * `type`: type of the point
     void leth_set(ServerHandle server, uint16_t x, uint16_t y, float temp, PointType type) noexcept;
 
+    /// Returns the current temperature information of all points.
+    ///
+    /// # Arguments
+    ///
+    /// * `temp`: the buffer to store temperature. Must be pointing a buffer with size of at least
+    ///           `width` * `height` * 4 bytes.
+    /// * `type`: the buffer to store point types. Must be pointing a buffer with size of at least
+    ///           `width` * `height` bytes.
+    void leth_get(ServerHandle server, float* temp, PointType* type) noexcept;
+
     /// Gets the simulation result.
     ///
     /// # Arguments
@@ -66,7 +76,7 @@ extern "C"
     /// * `spaceIdx`: the index of the space
     /// * `temp`: the buffer to store the result. Must be pointing a buffer with size of at least
     ///           `width` * `height` * 4 bytes.
-    ErrorCode leth_get(ServerHandle server, SpaceIndex spaceIdx, float* temp) noexcept;
+    ErrorCode leth_get_res(ServerHandle server, SpaceIndex spaceIdx, float* temp) noexcept;
 
     /// Destroys the given server instance.
     ///

@@ -103,6 +103,15 @@ void leth_set(ServerHandle handle, uint16_t x, uint16_t y, float temp, PointType
 
 #pragma endregion SetPoint
 
+#pragma region GetPoints
+
+void Server::GetPoints(float* temp, PointType* type) noexcept
+{
+    // TODO
+}
+
+#pragma endregion GetPoints
+
 #pragma region GetSimulationResult
 
 ErrorCode Server::GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept
@@ -111,7 +120,7 @@ ErrorCode Server::GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept
     return 0;
 }
 
-ErrorCode leth_get(ServerHandle handle, SpaceIndex spaceIdx, float* temp) noexcept
+ErrorCode leth_get_res(ServerHandle handle, SpaceIndex spaceIdx, float* temp) noexcept
 {
     CAST_SERVER();
     return server->GetSimulationResult(spaceIdx, temp);

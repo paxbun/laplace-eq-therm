@@ -43,6 +43,7 @@ class Server
     char const* GetSpaceName(SpaceIndex spaceIdx) noexcept;
     char const* GetErrorMessage(SpaceIndex spaceIdx, ErrorCode errorCode) noexcept;
     void        SetPoint(uint16_t x, uint16_t y, float temp, Space::PointType type) noexcept;
+    void        GetPoints(float* temp, Space::PointType* type) noexcept;
     ErrorCode   GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept;
 };
 
