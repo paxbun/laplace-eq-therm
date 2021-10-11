@@ -1,10 +1,11 @@
 [package]
 name = "laplace-eq-therm-client-common"
 version = "0.1.0"
-edition = "2018"
 authors = ["Chanjung Kim <freiyer.paxbun@gmail.com>"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+edition = "2018"
+description = "Implements a common logic (HTTP request) used by the client programs."
+repository = "https://github.com/paxbun/laplace-eq-therm"
+license = "MIT"
 
 [dependencies]
 laplace-eq-therm = { path = ".." }
