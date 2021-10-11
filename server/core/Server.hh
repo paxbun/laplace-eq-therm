@@ -22,11 +22,11 @@ class Server
               std::enable_if_t<(std::is_base_of_v<Space, ArgsT> && ...), int> = 0>
     static Server* Make(uint16_t width, uint16_t height)
     {
-        return new Server {
-            width,
-            height,
-            std::vector<std::unique_ptr<Space>> { std::make_unique<ArgsT>()... },
-        };
+        std::vector<std::unique_ptr<Space>> rtn;
+        rtn.reserve(sizeof...(ArgsT));
+        (rtn.push_back(std::make_unique<ArgsT>()), ...);
+
+        return new Server { width, height, std::move(rtn) };
     }
 
   private:
