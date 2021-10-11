@@ -21,6 +21,7 @@ include_static_resources! [
     ContentType::HTML,          "index.html"    ;
 ];
 
+/// Returns `index.html`.
 #[get("/")]
 pub fn get_index() -> rocket::response::Response<'static> {
     get_static_resource(String::from("index.html"))
