@@ -1,8 +1,8 @@
-use laplace_eq_therm::LocalInfoType;
-use laplace_eq_therm_client_common::Client;
-
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
+
+use laplace_eq_therm::LocalInfoType;
+use laplace_eq_therm_client_common::Client;
 
 pub mod serial;
 
