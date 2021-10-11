@@ -19,3 +19,9 @@ add_library(
     ${CMAKE_SOURCE_DIR}/MockSpace.cc
     ${CMAKE_SOURCE_DIR}/Server.cc
 )
+
+install(
+    TARGETS laplace-eq-therm-server-core
+    CONFIGURATIONS Debug Release
+    RUNTIME DESTINATION lib
+)
