@@ -20,15 +20,13 @@ class Server
   public:
     template <typename... ArgsT,
               std::enable_if_t<(std::is_base_of_v<Space, ArgsT> && ...), int> = 0>
-    Server* Make(uint16_t width, uint16_t height)
+    static Server* Make(uint16_t width, uint16_t height)
     {
-        return new Server
-        {
-            width, height,
-            {
-                std::make_unique<ArgsT>()...
-            }
-        }
+        return new Server {
+            width,
+            height,
+            std::vector<std::unique_ptr<Space>> { std::make_unique<ArgsT>()... },
+        };
     }
 
   private:
