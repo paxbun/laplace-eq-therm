@@ -4,24 +4,11 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 
+#include "Server.hh"
+#include "Space.hh"
 #include <cstdint>
 
-using Server     = void*;
-using SpaceIndex = uint32_t;
-using ErrorCode  = uint32_t;
-
-/// Represents the type of a point. (See src/lib.rs)
-enum class PointType : uint8_t
-{
-    /// Represents a boundary point.
-    Boundary = 0,
-    /// Represents an internal point. The temperature values of the points with this type
-    /// is used to be compared with the simulated result.
-    GroundTruth = 1,
-    /// Represents a point which does not participate in the computation.
-    /// The temperature values of the points with this type are ignored.
-    OutOfRange = 2,
-};
+using Server = void*;
 
 extern "C"
 {
