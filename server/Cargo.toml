@@ -1,9 +1,10 @@
 [package]
-name = "laplace-eq-therm"
+name = "laplace-eq-therm-server"
 version = "0.1.0"
 edition = "2018"
+authors = ["Chanjung Kim <freiyer.paxbun@gmail.com>"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[workspace]
-members = ["client-common", "client-mock", "client", "server"]
+[dependencies]
+laplace-eq-therm = { path = ".." }
