@@ -6,11 +6,12 @@
 use serde::{Deserialize, Serialize};
 
 /// Represents the type of a point.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug)]
 pub enum LocalInfoType {
     /// Represents a boundary point.
     Boundary,
-    /// Represents an internal point. The temperature values of the points with this type 
+    /// Represents an internal point. The temperature values of the points with this type
+    /// is used to be compared with the simulated result.
     GroundTruth,
     /// Represents a point which does not participate in the computation.
     /// The temperature values of the points with this type are ignored.
