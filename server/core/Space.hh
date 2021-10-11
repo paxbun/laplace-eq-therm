@@ -7,11 +7,13 @@
 #include <cstdint>
 #include <span>
 
-using ErrorCode  = uint32_t;
+using ErrorCode = uint32_t;
 
 /// Represents an algorithm implementer.
 class Space
 {
+    friend class Server;
+
   public:
     /// Represents the type of a point. (See src/lib.rs)
     enum class PointType : uint8_t
