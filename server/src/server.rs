@@ -53,7 +53,7 @@ impl Server {
         (unsafe { leth_get_num_spaces(self.handle) }) as u32
     }
 
-    /// Returns the name (null-terminated) of the space of the given index
+    /// Returns the name of the space of the given index
     ///
     /// # Arguments
     ///
