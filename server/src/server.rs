@@ -7,6 +7,7 @@ use crate::bindings::*;
 use laplace_eq_therm::{LocalInfoType, SpaceInfo};
 use std::ffi::c_void;
 use std::ffi::CStr;
+use std::ptr::null_mut;
 
 /// `Server` implements simulation algorithms and returns the results.
 pub struct Server {
@@ -29,8 +30,10 @@ impl Server {
     /// * `width`: width of the matrix
     /// * `height`: height of the matrix
     pub fn new(width: u16, height: u16) -> Self {
+        let handle = unsafe { leth_create(width, height) };
+        assert!(handle != std::ptr::null_mut());
         Server {
-            handle: unsafe { leth_create(width, height) },
+            handle,
             width,
             height,
         }
@@ -142,6 +145,6 @@ impl Server {
 impl Drop for Server {
     fn drop(&mut self) {
         unsafe { leth_delete(self.handle) };
-        self.handle = std::ptr::null_mut();
+        self.handle = null_mut();
     }
 }
