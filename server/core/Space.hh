@@ -43,6 +43,9 @@ class Space
     // Runs the simulation.
     virtual ErrorCode
     RunSimulation(Point const* input, float* output, int16_t width, int16_t height) noexcept = 0;
+
+  public:
+    virtual ~Space() {}
 };
 
 #endif
