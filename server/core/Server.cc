@@ -4,6 +4,7 @@
 #include "Server.hh"
 
 #include "Lib.hh"
+#include "MockSpace.hh"
 
 #define CAST_SERVER()                                                                              \
     auto server                                                                                    \
@@ -25,7 +26,7 @@ ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
 try
 {
     // TODO
-    return Server::Make(width, height);
+    return Server::Make<MockSpace>(width, height);
 }
 catch (...)
 {

@@ -20,5 +20,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 add_library(
     laplace-eq-therm-server-core
+    ${CMAKE_SOURCE_DIR}/MockSpace.cc
     ${CMAKE_SOURCE_DIR}/Server.cc
 )
