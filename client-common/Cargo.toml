@@ -9,3 +9,6 @@ license = "MIT"
 
 [dependencies]
 laplace-eq-therm = { path = ".." }
+reqwest = { version = "0.11.5", features = [ "blocking" ] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
