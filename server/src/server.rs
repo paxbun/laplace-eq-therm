@@ -37,6 +37,7 @@ impl Server {
         }
     }
 
+    /// Returns the size of the matrix
     pub fn size(&self) -> (u16, u16) {
         (self.width, self.height)
     }
