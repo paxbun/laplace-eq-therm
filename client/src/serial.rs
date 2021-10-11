@@ -3,7 +3,7 @@
 
 //! Implements functions used to communicate with Arduino.
 
-use serialport::SerialPort;
+use serialport::{SerialPort, SerialPortType};
 
 /// Represents an Arduino device.
 pub struct Arduino {
@@ -20,6 +20,25 @@ impl Arduino {
         Ok(Arduino {
             port: serialport::new(port_name, 9600).open().map_err(|_| ())?,
         })
+    }
+
+    /// Returns all Arduino devices connected to this PC.
+    pub fn get_available_ports() -> Vec<String> {
+        let ports = serialport::available_ports().unwrap_or(vec![]);
+        let ports = ports
+            .into_iter()
+            .filter(|info| {
+                if let SerialPortType::UsbPort(info) = &info.port_type {
+                    // 0x2341 is Arduino Vendor ID
+                    info.vid == 0x2341
+                } else {
+                    false
+                }
+            })
+            .map(|info| info.port_name)
+            .collect();
+
+        ports
     }
 
     /// Wait for the device and retrieve the temperature information.
