@@ -37,6 +37,10 @@ impl Server {
         }
     }
 
+    pub fn size(&self) -> (u16, u16) {
+        (self.width, self.height)
+    }
+
     /// Returns the number of spaces (algorithm implementers)
     ///
     /// # Arguments
@@ -90,7 +94,6 @@ impl Server {
                     LocalInfoType::Boundary => Space_PointType_Boundary,
                     LocalInfoType::GroundTruth => Space_PointType_GroundTruth,
                     LocalInfoType::OutOfRange => Space_PointType_OutOfRange,
-                    _ => Space_PointType_OutOfRange,
                 },
             )
         }
