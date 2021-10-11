@@ -33,7 +33,7 @@ pub fn get_index() -> rocket::response::Response<'static> {
 ///
 /// * `filename`: name of the resource
 #[get("/<filename>")]
-pub fn get_static_resource(mut filename: String) -> rocket::response::Response<'static> {
+pub fn get_static_resource(filename: String) -> rocket::response::Response<'static> {
     for (content_type, name, resource) in STATIC_RESOURCES {
         if &filename == name {
             return Response::build()
