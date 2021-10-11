@@ -3,7 +3,7 @@
 
 //! Implements a common logic (HTTP request) used by the client programs.
 
-use laplace_eq_therm::{LocalInfo, LocalInfoType, SpaceInfo};
+use laplace_eq_therm::{LocalInfo, LocalInfoType, SimulationResults};
 use reqwest::blocking::Client as ReqClient;
 use serde_json::{from_str, to_string};
 
@@ -40,7 +40,7 @@ impl Client {
 
     /// Sends the current temperature information to the server and retrieve the
     /// current temperature information of all points.
-    pub fn send(&self, temp: f32) -> SpaceInfo {
+    pub fn send(&self, temp: f32) -> SimulationResults {
         let response = self
             .client
             .post(&self.host)
@@ -57,7 +57,7 @@ impl Client {
             .unwrap();
 
         let body = response.text().unwrap();
-        let body: SpaceInfo = from_str(&body).unwrap();
+        let body: SimulationResults = from_str(&body).unwrap();
 
         body
     }
