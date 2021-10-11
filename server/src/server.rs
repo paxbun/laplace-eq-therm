@@ -3,9 +3,8 @@
 
 //! Implements `Servers` which exposes C++ part through FFI.
 
-use laplace_eq_therm::LocalInfoType;
-
 use crate::bindings::*;
+use laplace_eq_therm::{LocalInfoType, SpaceInfo};
 use std::ffi::c_void;
 use std::ffi::CStr;
 
@@ -100,7 +99,7 @@ impl Server {
         }
     }
 
-    /// Gets the simulation result.
+    /// Gets the simulation result in a raw form. Returns an error code. Error code is nonzero if the simulation failed.
     ///
     /// # Arguments
     ///
@@ -108,9 +107,35 @@ impl Server {
     /// * `spaceIdx`: the index of the space
     /// * `temp`: the buffer to store the result. Must be pointing a buffer with size of at least
     ///           `width` * `height` * 4 bytes.
-    pub fn get(&self, space_idx: u32, temp: &mut [f32]) -> u32 {
+    pub fn get_raw(&self, space_idx: u32, temp: &mut [f32]) -> u32 {
         assert!(temp.len() >= self.width as usize * self.height as usize);
         unsafe { leth_get(self.handle, space_idx, temp.as_mut_ptr()) }
+    }
+
+    /// Gets the simulation result. Returns a `SpaceInfo` instance if succeeded; an error code otherwise.
+    ///
+    /// # Arguments
+    ///
+    /// * `server`: the server instance returned by `leth_create`
+    /// * `spaceIdx`: the index of the space
+    pub fn get(&self, space_idx: u32) -> Result<SpaceInfo, u32> {
+        let mut buff = Vec::new();
+        buff.resize(self.width as usize * self.height as usize, 0.0f32);
+
+        let result = self.get_raw(space_idx, &mut buff);
+        if result != 0 {
+            Err(result)
+        } else {
+            Ok(SpaceInfo {
+                width: self.width,
+                height: self.height,
+                name: Some(String::from(self.get_space_name(space_idx))),
+                temp: buff
+                    .chunks(self.width as usize)
+                    .map(|s| Vec::from(s))
+                    .collect(),
+            })
+        }
     }
 }
 
