@@ -26,7 +26,7 @@ extern "C"
     /// # Arguments
     ///
     /// * `server`: the server instance returned by `leth_create`
-    uint32_t leth_get_num_spaces(ServerHandle server) noexcept;
+    SpaceIndex leth_get_num_spaces(ServerHandle server) noexcept;
 
     /// Returns the name (null-terminated) of the space of the given index
     ///
