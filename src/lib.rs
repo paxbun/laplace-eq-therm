@@ -43,3 +43,14 @@ pub struct SpaceInfo {
     /// temperature information corresponding to each point. Each vector must have the same length.
     pub temp: Vec<Vec<f32>>,
 }
+
+/// Represents a simulation result.
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SimulationResult {
+    /// error code returned during the simulation
+    pub error_code: u32,
+    /// the simulation result
+    pub result: Option<SpaceInfo>,
+}
+
+pub type SimulationResults = Vec<SimulationResult>;
