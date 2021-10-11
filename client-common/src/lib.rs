@@ -31,7 +31,7 @@ impl Client {
     pub fn new(host: String, x: u16, y: u16, r#type: LocalInfoType) -> Self {
         Client {
             client: ReqClient::new(),
-            host,
+            host: host + "/state",
             x,
             y,
             r#type,
