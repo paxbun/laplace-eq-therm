@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 use laplace_eq_therm::LocalInfoType;
-use laplace_eq_therm_client_common::Client;
 
+pub mod client;
 pub mod serial;
 
 fn print_usage() {
@@ -61,7 +61,7 @@ fn main() {
         }
     };
 
-    let client = Client::new(args[5].to_owned(), x, y, r#type);
+    let client = client::Client::new(args[5].to_owned(), x, y, r#type);
 
     loop {
         let temperature = device.get_current();

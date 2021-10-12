@@ -9,5 +9,7 @@ license = "MIT"
 
 [dependencies]
 laplace-eq-therm = { path = ".." }
-laplace-eq-therm-client-common = { path = "../client-common" }
 serialport = "4.0.1"
+reqwest = { version = "0.11.5", features = [ "blocking" ] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
