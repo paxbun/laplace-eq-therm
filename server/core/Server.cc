@@ -199,9 +199,12 @@ void Server::ConsumeQueue() noexcept
         while (!_requestQueue.empty())
         {
             auto& request { _requestQueue.front() };
-            auto& point { _inputBuffer[request.x + request.y * _width] };
-            point.temp = request.temp;
-            point.type = request.type;
+            if (request.x < _width && request.y < _width)
+            {
+                auto& point { _inputBuffer[request.x + request.y * _width] };
+                point.temp = request.temp;
+                point.type = request.type;
+            }
             _requestQueue.pop_front();
         }
     }
