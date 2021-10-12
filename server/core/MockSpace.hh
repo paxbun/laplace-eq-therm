@@ -5,9 +5,16 @@
 #define LAPLACE_EQ_THERM_SERVER_CORE_MOCK_SPACE_HH
 
 #include "Space.hh"
+#include <random>
 
 class MockSpace : public Space
 {
+  private:
+    std::default_random_engine _eng;
+
+  public:
+    MockSpace() : _eng { std::random_device {}() } {}
+
   protected:
     virtual char const* GetName() noexcept override;
 
@@ -17,6 +24,13 @@ class MockSpace : public Space
                                     float*       output,
                                     uint16_t     width,
                                     uint16_t     height) noexcept override;
+
+  private:
+    float DoMonteCarlo(Point const* input,
+                       int16_t     width,
+                       int16_t     height,
+                       int16_t     x,
+                       int16_t     y) noexcept;
 };
 
 #endif
