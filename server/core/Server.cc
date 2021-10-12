@@ -6,6 +6,8 @@
 #include "Lib.hh"
 #include "MockSpace.hh"
 #include "Point.hh"
+#include <cstring>
+
 
 #define CAST_SERVER()                                                                              \
     auto server                                                                                    \
