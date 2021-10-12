@@ -136,7 +136,7 @@ void Server::GetPoints(float* temp, PointType* type) noexcept
     std::lock_guard<std::mutex> guard { _inputBufferLock };
 
     size_t length = GetBufferLength();
-    for (size_t i = 0; i < length; ++i)
+    for (size_t i { 0 }; i < length; ++i)
     {
         temp[i] = _inputBuffer[i].temp;
         type[i] = _inputBuffer[i].type;
