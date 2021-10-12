@@ -177,7 +177,7 @@ impl Server {
             name: String::from(name),
             error_code,
             error_message: String::from(error_message),
-            temp: if error_code == 0 {
+            temp: if error_code != 0 {
                 None
             } else {
                 Some(
