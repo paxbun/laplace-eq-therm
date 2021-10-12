@@ -14,7 +14,8 @@ fn print_usage() {
     eprintln!("Usage: laplace-eq-therm-server <width of the matrix> <height of the matrix>");
 }
 
-fn main() {
+#[rocket::main]
+async fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 3 {
         print_usage();
@@ -29,7 +30,7 @@ fn main() {
         }
     };
 
-    rocket::ignite()
+    rocket::build()
         .manage(server::Server::new(width, height))
         .mount(
             "/",
@@ -40,5 +41,7 @@ fn main() {
                 resources::get_static_resource
             ],
         )
-        .launch();
+        .launch()
+        .await
+        .unwrap();
 }

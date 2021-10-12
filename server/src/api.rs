@@ -5,8 +5,8 @@
 
 use super::server::Server;
 use laplace_eq_therm::{LocalInfo, SimulationResults};
+use rocket::serde::json::Json;
 use rocket::State;
-use rocket_contrib::json::Json;
 
 /// Returns the current simulation results.
 ///
@@ -14,7 +14,7 @@ use rocket_contrib::json::Json;
 ///
 /// * `server`: the server state
 #[get("/state")]
-pub fn get_state(server: State<Server>) -> Json<SimulationResults> {
+pub fn get_state(server: &State<Server>) -> Json<SimulationResults> {
     Json(server.get_simulation_results())
 }
 
@@ -25,7 +25,7 @@ pub fn get_state(server: State<Server>) -> Json<SimulationResults> {
 /// * `state`: new temperature information at the given point
 /// * `server`: the server state
 #[post("/state", data = "<state>")]
-pub fn update_state(state: Json<LocalInfo>, server: State<Server>) -> Json<SimulationResults> {
+pub fn update_state(state: Json<LocalInfo>, server: &State<Server>) -> Json<SimulationResults> {
     server.set(state.x, state.y, state.temp, state.r#type);
     Json(server.get_simulation_results())
 }

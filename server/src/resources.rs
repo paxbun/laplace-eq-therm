@@ -4,13 +4,11 @@
 //! Implements static resource endpoint handling.
 
 use rocket::http::{ContentType, Status};
-use rocket::Response;
-use std::io::Cursor;
 
 macro_rules! include_static_resources {
     ($($content_type:expr, $filename:literal;)+) => {
-        static STATIC_RESOURCES: &[(ContentType, &str, &[u8])] = &[
-            $(($content_type, $filename, include_bytes!(concat!("../resources/", $filename)))),+
+        static STATIC_RESOURCES: &[(ContentType, &str, &str)] = &[
+            $(($content_type, $filename, include_str!(concat!("../resources/", $filename)))),+
         ];
     };
 }
@@ -23,7 +21,7 @@ include_static_resources! [
 
 /// Returns `index.html`.
 #[get("/")]
-pub fn get_index() -> rocket::response::Response<'static> {
+pub fn get_index() -> (Status, (ContentType, &'static str)) {
     get_static_resource(String::from("index.html"))
 }
 
@@ -33,16 +31,12 @@ pub fn get_index() -> rocket::response::Response<'static> {
 ///
 /// * `filename`: name of the resource
 #[get("/<filename>")]
-pub fn get_static_resource(filename: String) -> rocket::response::Response<'static> {
+pub fn get_static_resource(filename: String) -> (Status, (ContentType, &'static str)) {
     for (content_type, name, resource) in STATIC_RESOURCES {
         if &filename == name {
-            return Response::build()
-                .header(content_type.clone())
-                .status(Status::Ok)
-                .sized_body(Cursor::new(resource))
-                .finalize();
+            return (Status::Ok, (content_type.clone(), resource));
         }
     }
 
-    return Response::build().status(Status::NotFound).finalize();
+    return (Status::NotFound, (ContentType::Text, "Resource Not Found"));
 }
