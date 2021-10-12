@@ -1,8 +1,10 @@
 // temp is in [18, 30]
-function temperatureToColor(temp) {
-  temp = Math.min(temp, 30);
-  temp = Math.max(temp, 18);
-  temp = (temp - 18) / (30 - 18);
+function temperatureToColor(temp, min, max) {
+  min = min - 1.0;
+  max = max + 1.0;
+  temp = Math.min(temp, max);
+  temp = Math.max(temp, min);
+  temp = (temp - min) / (max - min);
 
   const hue = (1 - temp) * 100;
   const sat = 100;
@@ -63,11 +65,13 @@ function applyErrorToTable(table, errorCode, errorMessage) {
 }
 
 function applyResultsToTable(table, width, height, temp, type) {
+  let min = Math.min(...temp.map((arr) => Math.min(...arr)));
+  let max = Math.max(...temp.map((arr) => Math.max(...arr)));
   for (let i = 0; i < height; ++i) {
     for (let j = 0; j < width; ++j) {
       const cellElem = table[i][j];
       const cellValue = temp[i][j];
-      const cellColor = temperatureToColor(cellValue);
+      const cellColor = temperatureToColor(cellValue, min, max);
 
       while (cellElem.firstChild !== null)
         cellElem.removeChild(cellElem.firstChild);
