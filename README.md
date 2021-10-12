@@ -8,9 +8,40 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 
 - [Rust](https://www.rust-lang.org/tools/install) Nightly 1.57.0 or higher
 - [CMake](https://cmake.org/download/) 3.13.0 or higher
-- Proper C++ compilers such as GCC, [Clang](https://releases.llvm.org/download.html), or [MSVC](https://visualstudio.microsoft.com/)
+- Windows:
+  - Latest version of [MSVC](https://visualstudio.microsoft.com)
+  - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
+- Linux or Mac:
+  - Latest version of GCC or Clang
+  - Latest version of `libclang`
 
 ## How to build
+
+- Install the build dependencies (Windows)
+
+- Install the build dependencies (Linux)
+
+Older versions of GCC can't compile some valid C++17 code. Using GCC 9 or higher is recommended for building this project. On Ubuntu 18.04, you can install GCC 9 using the command below:
+
+```bash
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-9 g++-9
+```
+
+Before configuring the project, set `CC` and `CXX` to GCC 9.
+
+```bash
+export CC=gcc-9
+export CXX=g++-9
+```
+
+Likewise, older versions of `libclang` can't parse some of the files in this project. Please install `libclang-8` or higher if `rust-bindgen` generates any error.
+
+```bash
+sudo apt-get install libclang-8-dev
+export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
+```
 
 - Clone this repository
 
