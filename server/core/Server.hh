@@ -5,7 +5,9 @@
 #define LAPLACE_EQ_THERM_SERVER_CORE_SERVER_HH
 
 #include "Space.hh"
+#include <atomic>
 #include <cstdint>
+#include <deque>
 #include <memory>
 #include <mutex>
 #include <thread>
@@ -17,6 +19,14 @@ using SpaceIndex = uint32_t;
 /// `Server` manages spaces (algorithm implementers).
 class Server
 {
+  private:
+    struct SetPointRequest
+    {
+        uint16_t         x, y;
+        float            temp;
+        Space::PointType type;
+    };
+
   public:
     template <typename... ArgsT,
               std::enable_if_t<(std::is_base_of_v<Space, ArgsT> && ...), int> = 0>
@@ -32,11 +42,27 @@ class Server
   private:
     uint16_t                            _width, _height;
     std::vector<std::unique_ptr<Space>> _spaces;
+    std::atomic_bool                    _stopped;
+
+    std::mutex                  _requestQueueLock;
+    std::deque<SetPointRequest> _requestQueue;
+    std::thread                 _queueConsumerThread;
+
+    std::mutex                _inputBufferLock;
+    std::vector<Space::Point> _inputBuffer;
+    std::vector<std::thread>  _spaceThreads;
+
+    std::vector<std::mutex>         _outputBufferLocks;
+    std::vector<std::vector<float>> _outputBuffers;
+    std::vector<ErrorCode>          _outputResults;
 
   private:
     Server(uint16_t width, uint16_t height, std::vector<std::unique_ptr<Space>>&& spaces);
     Server(Server const&) = delete;
     Server& operator=(Server const&) = delete;
+
+  public:
+    ~Server() noexcept;
 
   public:
     SpaceIndex  GetNumberOfSpaces() noexcept;
@@ -45,6 +71,14 @@ class Server
     void        SetPoint(uint16_t x, uint16_t y, float temp, Space::PointType type) noexcept;
     void        GetPoints(float* temp, Space::PointType* type) noexcept;
     ErrorCode   GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept;
+
+  private:
+    inline size_t GetBufferLength() noexcept
+    {
+        return ((size_t)_width) * ((size_t)_height);
+    }
+    void ConsumeQueue() noexcept;
+    void CopyBufferAndRunSimulation(size_t idx, Space* space) noexcept;
 };
 
 #endif
