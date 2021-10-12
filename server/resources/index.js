@@ -111,9 +111,9 @@ function sleep(ms) {
 let type;
 let temp;
 const nextType = {
-  Boundary: "GroundTruth",
-  GroundTruth: "OutOfRange",
-  OutOfRange: "Boundary",
+  Boundary: "OutOfRange",
+  GroundTruth: "Boundary",
+  OutOfRange: "GroundTruth",
 };
 
 async function init() {
