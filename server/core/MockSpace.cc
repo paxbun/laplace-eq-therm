@@ -16,9 +16,16 @@ char const* MockSpace::GetErrorMessage(ErrorCode errorCode) noexcept
     return "Unknown error";
 }
 
-ErrorCode
-MockSpace::RunSimulation(Point const* input, float* output, int16_t width, int16_t height) noexcept
+ErrorCode MockSpace::RunSimulation(Point const* input,
+                                   float*       output,
+                                   uint16_t     width,
+                                   uint16_t     height) noexcept
 {
-    for (int16_t i = 0; i < width * height; ++i) { output[i] = 25.0f; }
-    return 0;
+    for (uint16_t i = 0; i < height; ++i)
+    {
+        for (uint16_t j = 0; j < width; ++j)
+        {
+            
+        }
+    }
 }
