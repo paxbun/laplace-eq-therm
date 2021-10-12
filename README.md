@@ -1,6 +1,6 @@
 # Laplace Equation Solver
 
-![Example](./example.png)
+![Example](./Example.png)
 
 Retrieves temperature information from Arduino and computes (approximate) solution of the Laplace equation problem.
 
