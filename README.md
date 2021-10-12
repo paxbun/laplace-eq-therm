@@ -9,11 +9,12 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 - [Rust](https://www.rust-lang.org/tools/install) Nightly 1.57.0 or higher
 - [CMake](https://cmake.org/download/) 3.13.0 or higher
 - Windows:
-  - Latest version of [MSVC](https://visualstudio.microsoft.com)
+  - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not tested)
   - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
-- Linux or Mac:
-  - Latest version of GCC or Clang
+- Linux:
+  - Latest version of GCC (Building using Clang on Linux is not tested)
   - Latest version of `libclang`
+- Mac (Building on Mac is not tested)
 
 ## How to build
 
