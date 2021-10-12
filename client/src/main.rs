@@ -65,7 +65,9 @@ fn main() {
 
     loop {
         let temperature = device.get_current();
-        client.send(temperature);
-        println!("Sent: {}", temperature);
+        if !temperature.is_nan() {
+            client.send(temperature);
+            println!("Sent: {}", temperature);
+        }
     }
 }
