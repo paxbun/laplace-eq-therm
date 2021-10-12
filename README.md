@@ -78,8 +78,7 @@ To toggle between the states, just click the cell you want to change. You will b
 
 ## How to connect Arduino to the server
 
-This repo contains another executable, `laplace-eq-therm-client`. This program reads temperature information from your Arduino board and sends it to the server.
-To see all available Arduino boards connected to your PC, just type as follows:
+This repo contains another executable, `laplace-eq-therm-client`. This program reads temperature information from your Arduino board and sends it to the server. To see all available Arduino boards connected to your PC, just type as follows:
 
 ```
 ./laplace-eq-therm-client
@@ -98,9 +97,7 @@ Usage: laplace-eq-therm-client <X> <Y> <Type> <Arduino Serial port> <Server URL>
 * COM3
 ```
 
-As you can see, there is a list of name of serial ports which are bound to Arduino boards in the last section.
-Choose one of them, then compile and upload [`Program.ino`](./Program.ino) to that board. After uplaoding, disconnect the board from Arduino's default serial monitor.
-Launch the client program following the usage instruction, e.g.:
+As you can see, there is a list of name of serial ports which are bound to Arduino boards in the last section. Choose one of them, then compile and upload [`Program.ino`](./Program.ino) to that board. After uplaoding, disconnect the board from Arduino's default serial monitor. Launch the client program following the usage instruction, e.g.:
 
 ```
 laplace-eq-therm-client 3 10 B COM3 http://localhost:8080
@@ -110,11 +107,9 @@ Then you will be able to see that the temperature information sent by the client
 
 ## How to add custom algorithm implementers
 
-The main algorithm implementations reside in the C++ part, not the Rust part. Go to [./server/core/Space.hh](`Space.hh`) and see the definition of `Space`.
-`Space` is a class which represents an algorithm implementer. Refer to [./server/core/MockSpace.cc](`MockSpace`) to find out what each virtual function must do.
+The main algorithm implementations reside in the C++ part, not the Rust part. Go to [./server/core/Space.hh](`Space.hh`) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [./server/core/MockSpace.cc](`MockSpace`) to find out what each virtual function must do.
 
-After implementing your own `Space` class, go to [./server/core/Server.cc](`Server.cc`) and find the function `leth_create`.
-The definition of `leth_create` is as shown below:
+After implementing your own `Space` class, go to [./server/core/Server.cc](`Server.cc`) and find the function `leth_create`. The definition of `leth_create` is as shown below:
 
 ```cpp
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
@@ -128,8 +123,7 @@ catch (...)
 }
 ```
 
-To add your implementations, just pass your classes to `Server::Make`. Suppose your `Space` classes are `FooSpace`, `BarSpace`, and `BazSpace`.
-Add your classes as follows:
+To add your implementations, just pass your classes to `Server::Make`. Suppose your `Space` classes are `FooSpace`, `BarSpace`, and `BazSpace`. Add your classes as follows:
 
 ```cpp
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
