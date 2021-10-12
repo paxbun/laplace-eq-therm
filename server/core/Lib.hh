@@ -4,11 +4,10 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 
-#include "Server.hh"
-#include "Space.hh"
+#include "IntegerTypes.hh"
+#include "Point.hh"
 #include <cstdint>
 
-using PointType    = Space::PointType;
 using ServerHandle = void*;
 
 extern "C"

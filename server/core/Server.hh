@@ -4,6 +4,7 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_SERVER_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_SERVER_HH
 
+#include "IntegerTypes.hh"
 #include "Space.hh"
 #include <atomic>
 #include <cstdint>
@@ -14,7 +15,6 @@
 #include <type_traits>
 #include <vector>
 
-using SpaceIndex = uint32_t;
 
 /// `Server` manages spaces (algorithm implementers).
 class Server
@@ -22,9 +22,9 @@ class Server
   private:
     struct SetPointRequest
     {
-        uint16_t         x, y;
-        float            temp;
-        Space::PointType type;
+        uint16_t  x, y;
+        float     temp;
+        PointType type;
     };
 
   public:
@@ -48,9 +48,9 @@ class Server
     std::deque<SetPointRequest> _requestQueue;
     std::thread                 _queueConsumerThread;
 
-    std::mutex                _inputBufferLock;
-    std::vector<Space::Point> _inputBuffer;
-    std::vector<std::thread>  _spaceThreads;
+    std::mutex               _inputBufferLock;
+    std::vector<Point>       _inputBuffer;
+    std::vector<std::thread> _spaceThreads;
 
     std::vector<std::mutex>         _outputBufferLocks;
     std::vector<std::vector<float>> _outputBuffers;
@@ -68,8 +68,8 @@ class Server
     SpaceIndex  GetNumberOfSpaces() noexcept;
     char const* GetSpaceName(SpaceIndex spaceIdx) noexcept;
     char const* GetErrorMessage(SpaceIndex spaceIdx, ErrorCode errorCode) noexcept;
-    void        SetPoint(uint16_t x, uint16_t y, float temp, Space::PointType type) noexcept;
-    void        GetPoints(float* temp, Space::PointType* type) noexcept;
+    void        SetPoint(uint16_t x, uint16_t y, float temp, PointType type) noexcept;
+    void        GetPoints(float* temp, PointType* type) noexcept;
     ErrorCode   GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept;
 
   private:
