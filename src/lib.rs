@@ -32,16 +32,6 @@ pub struct LocalInfo {
     pub r#type: LocalInfoType,
 }
 
-/// Represents the simulation result of all points at a specific time point.
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct SpaceInfo {
-    /// (Optional) name of the data. Used to distinguish the simulated result and the ground truth.
-    pub name: Option<String>,
-    /// temperature information corresponding to each point. Each vector must have the same length.
-    pub temp: Vec<Vec<f32>>,
-}
-
 /// Represents temperature information of all points at a specific time point.
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -56,10 +46,14 @@ pub struct GlobalInfo {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct SimulationResult {
+    /// name of the data. Used to distinguish the simulated result and the ground truth.
+    pub name: String,
     /// error code returned during the simulation
     pub error_code: u32,
-    /// the simulation result
-    pub result: Option<SpaceInfo>,
+    /// error message corresponding to the error code
+    pub error_message: String,
+    /// temperature information
+    pub temp: Option<Vec<Vec<f32>>>,
 }
 
 /// Represents a server state.

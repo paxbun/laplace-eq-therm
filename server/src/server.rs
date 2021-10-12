@@ -6,7 +6,7 @@
 //! Implements `Servers` which exposes C++ part through FFI.
 
 use crate::bindings::*;
-use laplace_eq_therm::{GlobalInfo, LocalInfoType, SimulationResult, SimulationResults, SpaceInfo};
+use laplace_eq_therm::{GlobalInfo, LocalInfoType, SimulationResult, SimulationResults};
 use std::ffi::{c_void, CStr};
 use std::ptr::null_mut;
 
@@ -166,21 +166,26 @@ impl Server {
     ///
     /// * `server`: the server instance returned by `leth_create`
     /// * `spaceIdx`: the index of the space
-    pub fn get_result(&self, space_idx: u32) -> Result<SpaceInfo, u32> {
+    pub fn get_result(&self, space_idx: u32) -> SimulationResult {
         let mut buff = Vec::new();
         buff.resize(self.width as usize * self.height as usize, 0.0f32);
 
-        let result = self.get_result_raw(space_idx, &mut buff);
-        if result != 0 {
-            Err(result)
-        } else {
-            Ok(SpaceInfo {
-                name: Some(String::from(self.get_space_name(space_idx))),
-                temp: buff
-                    .chunks(self.width as usize)
-                    .map(|s| Vec::from(s))
-                    .collect(),
-            })
+        let name = self.get_space_name(space_idx);
+        let error_code = self.get_result_raw(space_idx, &mut buff);
+        let error_message = self.get_error_message(space_idx, error_code);
+        SimulationResult {
+            name: String::from(name),
+            error_code,
+            error_message: String::from(error_message),
+            temp: if error_code == 0 {
+                None
+            } else {
+                Some(
+                    buff.chunks(self.width as usize)
+                        .map(|s| Vec::from(s))
+                        .collect(),
+                )
+            },
         }
     }
 
@@ -191,16 +196,7 @@ impl Server {
             height: self.height,
             info: self.get(),
             results: (0..self.get_num_spaces())
-                .map(|i| match self.get_result(i) {
-                    Ok(result) => SimulationResult {
-                        error_code: 0,
-                        result: Some(result),
-                    },
-                    Err(error_code) => SimulationResult {
-                        error_code,
-                        result: None,
-                    },
-                })
+                .map(|i| self.get_result(i))
                 .collect(),
         }
     }
