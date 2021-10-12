@@ -20,6 +20,7 @@ pub enum LocalInfoType {
 
 /// Represents temperature information at a point.
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LocalInfo {
     /// x-coordinate of this point
     pub x: u16,
@@ -33,6 +34,7 @@ pub struct LocalInfo {
 
 /// Represents the simulation result of all points at a specific time point.
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct SpaceInfo {
     /// width of the point matrix
     pub width: u16,
@@ -46,6 +48,7 @@ pub struct SpaceInfo {
 
 /// Represents temperature information of all points at a specific time point.
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct GlobalInfo {
     /// temperature
     pub temp: Vec<Vec<f32>>,
@@ -55,6 +58,7 @@ pub struct GlobalInfo {
 
 /// Represents a simulation result.
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct SimulationResult {
     /// error code returned during the simulation
     pub error_code: u32,
@@ -64,6 +68,7 @@ pub struct SimulationResult {
 
 /// Represents a server state.
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct SimulationResults {
     /// temperature information given by the clients
     pub info: GlobalInfo,
