@@ -49,6 +49,7 @@ fn generate_bindings(header_path: &str) -> Result<()> {
         "non_snake_case",
         "non_upper_case_globals",
         "dead_code",
+        "deref_nullptr",
     ];
     for error_type in error_types.iter() {
         writeln!(file, "#![allow({})]", error_type)?;
