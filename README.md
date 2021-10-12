@@ -92,7 +92,7 @@ Rocket has launched from http://0.0.0.0:8000
 
 Open a web browser and type the URL into the address bar. You must see several tables with colored cells.
 
-## How to set temperature at a point through web browsers
+## How to set temperature at a point through the web browser
 
 Each point of the input matrix (represented as a cell in the input table) can be in one of three states:
 
