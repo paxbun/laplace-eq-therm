@@ -175,8 +175,6 @@ impl Server {
             Err(result)
         } else {
             Ok(SpaceInfo {
-                width: self.width,
-                height: self.height,
                 name: Some(String::from(self.get_space_name(space_idx))),
                 temp: buff
                     .chunks(self.width as usize)
@@ -189,6 +187,8 @@ impl Server {
     /// Returns server state in a form of `SimulationResults`.
     pub fn get_simulation_results(&self) -> SimulationResults {
         SimulationResults {
+            width: self.width,
+            height: self.height,
             info: self.get(),
             results: (0..self.get_num_spaces())
                 .map(|i| match self.get_result(i) {
