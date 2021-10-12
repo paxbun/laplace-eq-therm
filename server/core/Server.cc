@@ -75,7 +75,7 @@ char const* Server::GetErrorMessage(SpaceIndex spaceIdx, ErrorCode errorCode) no
     if (spaceIdx >= _spaces.size())
         return "Unknown error";
     else
-        return _spaces[spaceIdx]->GetName();
+        return _spaces[spaceIdx]->GetErrorMessage(errorCode);
 }
 
 char const* leth_get_error_message(ServerHandle handle,
@@ -123,7 +123,7 @@ void leth_get(ServerHandle handle, float* temp, PointType* type) noexcept
 ErrorCode Server::GetSimulationResult(SpaceIndex spaceIdx, float* temp) noexcept
 {
     // TODO
-    return 0;
+    return 2;
 }
 
 ErrorCode leth_get_res(ServerHandle handle, SpaceIndex spaceIdx, float* temp) noexcept
