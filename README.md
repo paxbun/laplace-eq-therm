@@ -38,7 +38,7 @@ Launch the server by typing the following command:
 ./laplace-eq-therm-server <width of the matrix> <height of the matrix>
 ```
 
-The server program is using [Rocket](https://github.com/SergioBenitez/Rocket). All configuration parameters supported by Rocket can be set to other values by the users. For detail, pleas refer [the documentation](https://rocket.rs/v0.4/guide/configuration/). For example, you can change the listening IP address in PowerShell as follows:
+The server program is using [Rocket](https://github.com/SergioBenitez/Rocket). All configuration parameters supported by Rocket can be set to other values by the users. For detail, please refer [the documentation](https://rocket.rs/v0.4/guide/configuration/). For example, you can change the listening IP address in PowerShell as follows:
 
 ```powershell
 ${env:ROCKET_ADDRESS} = "0.0.0.0";
@@ -64,7 +64,7 @@ Open a web browser and type the URL into the address bar. You must see several t
 
 Each point of the input matrix (represented as a cell in the input table) can be in one of three states:
 
-- `Boundary`: This point is regarded to be a constituent
+- `Boundary`: This point constitutes the boundary condition.
 - `GroundTruth`: This point does not participate in the computation of the solution of the equation. This point is to be compoared with the simulated values.
 - `OutOfRange`: This point does not participate in the computation, and its value is not considered valid.
 
@@ -74,7 +74,7 @@ On the website, cells in each state are displayed differently as follows:
 - `GroundTruth`: Normal, 16px
 - `OutOfRange`: Transparent
 
-To toggle between the states, just click the cell you want to change. You will be prompted for the new temperature value of that cell.
+To toggle between the states, just click the cell you want to change. You will be prompted for the new temperature value of that cell if needed.
 
 ## How to connect Arduino to the server
 
