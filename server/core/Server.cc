@@ -131,8 +131,6 @@ void leth_set(ServerHandle handle, uint16_t x, uint16_t y, float temp, PointType
 
 #pragma region GetPoints
 
-#include <random>
-
 void Server::GetPoints(float* temp, PointType* type) noexcept
 {
     std::lock_guard<std::mutex> guard { _inputBufferLock };
