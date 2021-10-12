@@ -2,7 +2,7 @@
 
 ![Example](./Example.png)
 
-Retrieves temperature information from Arduino and computes (approximate) solution of the Laplace equation problem.
+Retrieves temperature information from Arduino and computes the (approximate) solution of the Laplace equation problem.
 
 ## Prerequisites
 
