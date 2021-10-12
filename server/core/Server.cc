@@ -110,6 +110,12 @@ void Server::GetPoints(float* temp, PointType* type) noexcept
     // TODO
 }
 
+void leth_get(ServerHandle handle, float* temp, PointType* type) noexcept
+{
+    CAST_SERVER();
+    server->GetPoints(temp, type);
+}
+
 #pragma endregion GetPoints
 
 #pragma region GetSimulationResult
