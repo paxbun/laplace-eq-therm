@@ -15,7 +15,6 @@
 #include <type_traits>
 #include <vector>
 
-
 /// `Server` manages spaces (algorithm implementers).
 class Server
 {
@@ -29,7 +28,7 @@ class Server
 
   public:
     template <typename... ArgsT,
-              std::enable_if_t<(std::is_base_of_v<Space, ArgsT> && ...), int> = 0>
+              typename std::enable_if<(std::is_base_of<Space, ArgsT>::value && ...), int>::type = 0>
     static Server* Make(uint16_t width, uint16_t height)
     {
         std::vector<std::unique_ptr<Space>> rtn;
