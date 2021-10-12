@@ -75,12 +75,19 @@ function applyResultsToTable(table, width, height, temp, type) {
       switch (type[i][j]) {
         case "Boundary":
           cellElem.style.fontWeight = "bold";
+          cellElem.style.fontSize = "20px";
+          cellElem.appendChild(document.createTextNode(cellValue.toFixed(2)));
+          cellElem.style.backgroundColor = cellColor;
+          break;
         case "GroundTruth":
+          cellElem.style.fontWeight = "normal";
+          cellElem.style.fontSize = "16px";
           cellElem.appendChild(document.createTextNode(cellValue.toFixed(2)));
           cellElem.style.backgroundColor = cellColor;
           break;
         case "OutOfRange":
           cellElem.style.opacity = "0";
+          break;
       }
     }
   }
