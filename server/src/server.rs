@@ -1,6 +1,8 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
+#![allow(non_upper_case_globals)]
+
 //! Implements `Servers` which exposes C++ part through FFI.
 
 use crate::bindings::*;
