@@ -74,12 +74,14 @@ function applyResultsToTable(table, width, height, temp, type) {
 
       switch (type[i][j]) {
         case "Boundary":
+          cellElem.style.opacity = "1";
           cellElem.style.fontWeight = "bold";
           cellElem.style.fontSize = "20px";
           cellElem.appendChild(document.createTextNode(cellValue.toFixed(2)));
           cellElem.style.backgroundColor = cellColor;
           break;
         case "GroundTruth":
+          cellElem.style.opacity = "1";
           cellElem.style.fontWeight = "normal";
           cellElem.style.fontSize = "16px";
           cellElem.appendChild(document.createTextNode(cellValue.toFixed(2)));
@@ -102,6 +104,14 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+let type;
+let temp;
+const nextType = {
+  Boundary: "GroundTruth",
+  GroundTruth: "OutOfRange",
+  OutOfRange: "Boundary",
+};
+
 async function init() {
   const initialResults = await getResults();
   const width = initialResults.width;
@@ -112,7 +122,25 @@ async function init() {
     "Input",
     width,
     height,
-    (i, j, cellElem) => {}
+    (i, j, cellElem) => {
+      cellElem.addEventListener("click", async () => {
+        const next = nextType[type[i][j]];
+        await fetch("/state", {
+          method: "POST",
+          body: JSON.stringify({
+            x: j,
+            y: i,
+            temp:
+              type[i][j] === "OutOfRange"
+                ? parseFloat(
+                    prompt(`New temperature for ${next} point (${i}, ${j}):`)
+                  )
+                : temp[i][j],
+            type: next,
+          }),
+        });
+      });
+    }
   );
   const outputTables = {};
   for (const result of initialResults.results) {
@@ -126,6 +154,8 @@ async function init() {
   }
 
   let results = initialResults;
+  type = results.info.type;
+  temp = results.info.temp;
   while (true) {
     applyResultsToTable(
       inputTable,
@@ -152,6 +182,8 @@ async function init() {
     }
     await sleep(1000);
     results = await getResults();
+    type = results.info.type;
+    temp = results.info.temp;
   }
 }
 

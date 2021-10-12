@@ -15,3 +15,11 @@ div {
   position: absolute;
   width: 100%;
 }
+
+td:hover {
+  border: 2px solid red;
+}
+
+* {
+  box-sizing: border-box;
+}
