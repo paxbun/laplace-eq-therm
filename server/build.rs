@@ -5,6 +5,7 @@ use std::env::var;
 use std::fs::File;
 use std::io::{Result, Write};
 use std::path::Path;
+use std::process::Command;
 
 fn run_cmake(source_dir: &str, target_name: &str) {
     let sources = [
@@ -49,6 +50,7 @@ fn generate_bindings(header_path: &str) -> Result<()> {
         "non_snake_case",
         "non_upper_case_globals",
         "dead_code",
+        "deref_nullptr",
     ];
     for error_type in error_types.iter() {
         writeln!(file, "#![allow({})]", error_type)?;
@@ -60,6 +62,25 @@ fn generate_bindings(header_path: &str) -> Result<()> {
 fn main() -> Result<()> {
     // Set profile as an environment variable: used to build tests/import_test
     println!("cargo:rustc-env=PROFILE={}", var("PROFILE").unwrap());
+    // If CXX is set
+    if let Ok(var) = var("CXX") {
+        // Find where the corresponding version of libstdc++.a is located
+        let output = Command::new(var)
+            .arg("--print-file-name=libstdc++.a")
+            .output()
+            .unwrap();
+
+        let path = String::from_utf8_lossy(&output.stdout).to_string();
+        let path = Path::new(&path);
+
+        println!(
+            "cargo:rustc-link-search=native={}",
+            path.parent()
+                .expect("Cannot find proper version of libstdc++.a")
+                .display()
+        );
+        println!("cargo:rustc-link-lib=static=stdc++");
+    }
     run_cmake("core", "laplace-eq-therm-server-core");
     generate_bindings("core/Lib.hh")
 }

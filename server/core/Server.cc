@@ -5,15 +5,15 @@
 
 #include "Lib.hh"
 #include "MockSpace.hh"
+#include "Point.hh"
+#include <cstring>
+
 
 #define CAST_SERVER()                                                                              \
     auto server                                                                                    \
     {                                                                                              \
         (Server*)handle                                                                            \
     }
-
-using Point     = Space::Point;
-using PointType = Space::PointType;
 
 #pragma region Creation
 
@@ -214,7 +214,7 @@ void Server::CopyBufferAndRunSimulation(size_t idx, Space* space) noexcept
 {
     while (!_stopped)
     {
-        std::vector<Space::Point> input;
+        std::vector<Point> input;
         {
             std::lock_guard<std::mutex> guard { _inputBufferLock };
             input = _inputBuffer;

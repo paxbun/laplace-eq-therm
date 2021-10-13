@@ -95,9 +95,9 @@ impl Server {
                 y,
                 temp,
                 match ty {
-                    LocalInfoType::Boundary => Space_PointType_Boundary,
-                    LocalInfoType::GroundTruth => Space_PointType_GroundTruth,
-                    LocalInfoType::OutOfRange => Space_PointType_OutOfRange,
+                    LocalInfoType::Boundary => PointType_Boundary,
+                    LocalInfoType::GroundTruth => PointType_GroundTruth,
+                    LocalInfoType::OutOfRange => PointType_OutOfRange,
                 },
             )
         }
@@ -137,8 +137,8 @@ impl Server {
                 .map(|s| {
                     s.iter()
                         .map(|&i| match i {
-                            Space_PointType_Boundary => LocalInfoType::Boundary,
-                            Space_PointType_GroundTruth => LocalInfoType::GroundTruth,
+                            PointType_Boundary => LocalInfoType::Boundary,
+                            PointType_GroundTruth => LocalInfoType::GroundTruth,
                             _ => LocalInfoType::OutOfRange,
                         })
                         .collect()
