@@ -61,6 +61,10 @@ fn generate_bindings(header_path: &str) -> Result<()> {
 fn main() -> Result<()> {
     // Set profile as an environment variable: used to build tests/import_test
     println!("cargo:rustc-env=PROFILE={}", var("PROFILE").unwrap());
+    // Link the C++ standard library
+    cc::Build::new().cpp(true).file("Dummy.cc").compile("dummy");
+    // Configure and build the CMake project
     run_cmake("core", "laplace-eq-therm-server-core");
+    // Generate bindings from core/Lib.hh
     generate_bindings("core/Lib.hh")
 }
