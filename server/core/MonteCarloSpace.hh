@@ -1,8 +1,8 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#ifndef LAPLACE_EQ_THERM_SERVER_CORE_MOCK_SPACE_HH
-#define LAPLACE_EQ_THERM_SERVER_CORE_MOCK_SPACE_HH
+#ifndef LAPLACE_EQ_THERM_SERVER_CORE_MONTE_CARLO_SPACE_HH
+#define LAPLACE_EQ_THERM_SERVER_CORE_MONTE_CARLO_SPACE_HH
 
 #include "Space.hh"
 #include <random>
