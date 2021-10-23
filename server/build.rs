@@ -20,8 +20,12 @@ fn run_cmake(source_dir: &str, target_name: &str) {
         println!("cargo:rerun-if-changed={}/{}", source_dir, src);
     }
 
+    let mut config = cc::Build::new();
+    config.cpp(true);
+
     let install_dir = cmake::Config::new(source_dir)
         .build_target("install")
+        .init_cxx_cfg(config)
         .build();
 
     println!(
