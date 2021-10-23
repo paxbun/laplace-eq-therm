@@ -7,7 +7,6 @@
 #include "Point.hh"
 #include <cstring>
 
-
 #define CAST_SERVER()                                                                              \
     auto server                                                                                    \
     {                                                                                              \
