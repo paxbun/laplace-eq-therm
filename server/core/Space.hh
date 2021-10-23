@@ -8,7 +8,6 @@
 #include "Point.hh"
 #include <cstdint>
 
-
 /// Represents an algorithm implementer.
 class Space
 {
