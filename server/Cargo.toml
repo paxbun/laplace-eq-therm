@@ -14,4 +14,3 @@ rocket = { version = "0.5.0-rc.1", features = [ "json" ] }
 [build-dependencies]
 cmake = "0.1"
 bindgen = "0.59.1"
-cc = "1.0.71"

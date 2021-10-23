@@ -5,6 +5,51 @@ use std::env::var;
 use std::fs::File;
 use std::io::{Result, Write};
 use std::path::Path;
+use std::process::Command;
+
+fn main() -> Result<()> {
+    // Set profile as an environment variable: used to build tests/import_test
+    println!("cargo:rustc-env=PROFILE={}", var("PROFILE").unwrap());
+    // Link the C++ standard library
+    link_cplusplus();
+    // Configure and build the CMake project
+    run_cmake("core", "laplace-eq-therm-server-core");
+    // Generate bindings from core/Lib.hh
+    generate_bindings("core/Lib.hh")
+}
+
+#[cfg(target_os = "windows")]
+fn link_cplusplus() {
+    /* do nothing */
+}
+
+#[cfg(target_os = "linux")]
+fn link_cplusplus() {
+    // If CXX is set
+    if let Ok(var) = var("CXX") {
+        // Find where the corresponding version of libstdc++.a is located
+        let output = Command::new(var)
+            .arg("--print-file-name=libstdc++.a")
+            .output()
+            .unwrap();
+
+        let path = String::from_utf8_lossy(&output.stdout).to_string();
+        let path = Path::new(&path);
+
+        println!(
+            "cargo:rustc-link-search=native={}",
+            path.parent()
+                .expect("Cannot find proper version of libstdc++.a")
+                .display()
+        );
+    }
+    println!("cargo:rustc-link-lib=static=stdc++");
+}
+
+#[cfg(target_os = "macos")]
+fn link_cplusplus() {
+    println!("cargo:rustc-link-lib=static=c++");
+}
 
 fn run_cmake(source_dir: &str, target_name: &str) {
     let sources = [
@@ -20,12 +65,8 @@ fn run_cmake(source_dir: &str, target_name: &str) {
         println!("cargo:rerun-if-changed={}/{}", source_dir, src);
     }
 
-    let mut config = cc::Build::new();
-    config.cpp(true);
-
     let install_dir = cmake::Config::new(source_dir)
         .build_target("install")
-        .init_cxx_cfg(config)
         .build();
 
     println!(
@@ -60,15 +101,4 @@ fn generate_bindings(header_path: &str) -> Result<()> {
     }
     write!(file, "\n{}", bindings.to_string())?;
     Ok(())
-}
-
-fn main() -> Result<()> {
-    // Set profile as an environment variable: used to build tests/import_test
-    println!("cargo:rustc-env=PROFILE={}", var("PROFILE").unwrap());
-    // Link the C++ standard library
-    cc::Build::new().cpp(true).file("Dummy.cc").compile("dummy");
-    // Configure and build the CMake project
-    run_cmake("core", "laplace-eq-therm-server-core");
-    // Generate bindings from core/Lib.hh
-    generate_bindings("core/Lib.hh")
 }
