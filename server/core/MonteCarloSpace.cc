@@ -31,7 +31,7 @@ ErrorCode MonteCarloSpace::RunSimulation(Point const* input,
             float sum { 0 };
             for (int repeat { 0 }; repeat < 1000; ++repeat)
                 sum += DoMonteCarlo(input, width, height, j, i);
-            output[i * width + j] = sum / 1000;
+            output[static_cast<size_t>(i) * width + j] = sum / 1000;
         }
     }
 
