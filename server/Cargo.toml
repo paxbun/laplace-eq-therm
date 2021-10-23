@@ -10,6 +10,7 @@ license = "MIT"
 [dependencies]
 laplace-eq-therm = { path = ".." }
 rocket = { version = "0.5.0-rc.1", features = [ "json" ] }
+link-cplusplus = "1.0"
 
 [build-dependencies]
 cmake = "0.1"
