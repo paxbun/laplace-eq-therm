@@ -11,7 +11,7 @@ pub mod resources;
 pub mod server;
 
 fn print_usage() {
-    eprintln!("Usage: laplace-eq-therm-server <width of the matrix> <height of the matrix>");
+    eprintln!("Usage: laplace-eq-therm-server <width (>= 3)> <height (>= 3)>");
 }
 
 #[rocket::main]
@@ -29,6 +29,11 @@ async fn main() {
             return;
         }
     };
+
+    if (width < 3u16) | (height < 3u16) {
+        print_usage();
+        return;
+    }
 
     rocket::build()
         .manage(server::Server::new(width, height))

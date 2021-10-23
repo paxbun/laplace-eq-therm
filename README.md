@@ -67,7 +67,7 @@ cd target/release
 Launch the server by typing the following command:
 
 ```
-./laplace-eq-therm-server <width of the matrix> <height of the matrix>
+./laplace-eq-therm-server <width of the matrix (>= 3)> <height of the matrix (>= 3)>
 ```
 
 The server program is using [Rocket](https://github.com/SergioBenitez/Rocket). All configuration parameters supported by Rocket can be set to other values by the users. For detail, please refer [the documentation](https://rocket.rs/v0.4/guide/configuration/). For example, you can change the listening IP address in PowerShell as follows:
