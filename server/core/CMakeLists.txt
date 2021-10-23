@@ -17,7 +17,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(
     laplace-eq-therm-server-core
     ${CMAKE_SOURCE_DIR}/Config.cc
-    ${CMAKE_SOURCE_DIR}/MockSpace.cc
+    ${CMAKE_SOURCE_DIR}/MonteCarloSpace.cc
     ${CMAKE_SOURCE_DIR}/Server.cc
 )
 

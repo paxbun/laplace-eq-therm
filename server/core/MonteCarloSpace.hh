@@ -7,13 +7,13 @@
 #include "Space.hh"
 #include <random>
 
-class MockSpace : public Space
+class MonteCarloSpace : public Space
 {
   private:
     std::default_random_engine _eng;
 
   public:
-    MockSpace() : _eng { std::random_device {}() } {}
+    MonteCarloSpace() : _eng { std::random_device {}() } {}
 
   protected:
     virtual char const* GetName() noexcept override;
@@ -26,11 +26,8 @@ class MockSpace : public Space
                                     uint16_t     height) noexcept override;
 
   private:
-    float DoMonteCarlo(Point const* input,
-                       int16_t     width,
-                       int16_t     height,
-                       int16_t     x,
-                       int16_t     y) noexcept;
+    float
+    DoMonteCarlo(Point const* input, int16_t width, int16_t height, int16_t x, int16_t y) noexcept;
 };
 
 #endif

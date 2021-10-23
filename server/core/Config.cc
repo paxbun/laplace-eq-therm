@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 #include "Lib.hh"
-#include "MockSpace.hh"
+#include "MonteCarloSpace.hh"
 #include "Server.hh"
-
 
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
 try
 {
     // TODO
-    return Server::Make<MockSpace>(width, height);
+    return Server::Make<MonteCarloSpace>(width, height);
 }
 catch (...)
 {

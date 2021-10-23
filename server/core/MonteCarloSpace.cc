@@ -1,17 +1,17 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#include "MockSpace.hh"
+#include "MonteCarloSpace.hh"
 
 #include <limits>
 #include <random>
 
-char const* MockSpace::GetName() noexcept
+char const* MonteCarloSpace::GetName() noexcept
 {
-    return "MockSpace";
+    return "Monte Carlo";
 }
 
-char const* MockSpace::GetErrorMessage(ErrorCode errorCode) noexcept
+char const* MonteCarloSpace::GetErrorMessage(ErrorCode errorCode) noexcept
 {
     if (errorCode == 0)
         return "Success";
@@ -19,10 +19,10 @@ char const* MockSpace::GetErrorMessage(ErrorCode errorCode) noexcept
     return "Unknown error";
 }
 
-ErrorCode MockSpace::RunSimulation(Point const* input,
-                                   float*       output,
-                                   uint16_t     width,
-                                   uint16_t     height) noexcept
+ErrorCode MonteCarloSpace::RunSimulation(Point const* input,
+                                         float*       output,
+                                         uint16_t     width,
+                                         uint16_t     height) noexcept
 {
     for (uint16_t i { 0 }; i < height; ++i)
     {
@@ -38,11 +38,11 @@ ErrorCode MockSpace::RunSimulation(Point const* input,
     return 0;
 }
 
-float MockSpace::DoMonteCarlo(Point const* input,
-                              int16_t      width,
-                              int16_t      height,
-                              int16_t      x,
-                              int16_t      y) noexcept
+float MonteCarloSpace::DoMonteCarlo(Point const* input,
+                                    int16_t      width,
+                                    int16_t      height,
+                                    int16_t      x,
+                                    int16_t      y) noexcept
 {
     std::uniform_int_distribution<int> dist { 0, 3 };
 
