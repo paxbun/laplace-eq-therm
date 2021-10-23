@@ -6,43 +6,43 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 
 ## Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) Nightly 1.57.0 or higher
+- [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`; see [rust-toolchain.toml](./rust-toolchain.toml))
 - [CMake](https://cmake.org/download/) 3.13.0 or higher
 - Windows:
-  - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not tested)
+  - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not supported)
   - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
+  - Latest version of [Strawberry Perl](https://strawberryperl.com/) (Required to build OpenSSL on Windows)
 - Linux:
-  - Latest version of GCC (Building using Clang on Linux is not tested)
+  - Latest version of GCC (Building using Clang is not supported)
   - Latest version of `libclang`
 - Mac (Building on Mac is not tested)
 
 ## How to build
 
-- Install the build dependencies (Windows)
+### Install the build dependencies (Linux)
 
-- Install the build dependencies (Linux)
-
-Older versions of GCC can't compile some valid C++17 code. Using GCC 9 or higher is recommended for building this project. On Ubuntu 18.04, you can install GCC 9 using the command below:
+- Install basic development tools.
 
 ```bash
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-sudo apt update
-sudo apt install gcc-9 g++-9
+sudo apt-get install build-essential
+sudo apt-get install pkg-config
 ```
 
-Before configuring the project, set `CC` and `CXX` to GCC 9.
+- Install some libraries used by the Rust libraries which this project is dependent on.
 
 ```bash
-export CC=gcc-9
-export CXX=g++-9
+sudo apt-get install libudev-dev
+sudo apt-get install libssl-dev
 ```
 
-Likewise, older versions of `libclang` can't parse some of the files in this project. Please install `libclang-8` or higher if `rust-bindgen` generates any error.
+- Please install `libclang-8` or higher if `rust-bindgen` generates any error.
 
 ```bash
 sudo apt-get install libclang-8-dev
 export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
 ```
+
+### Build the project
 
 - Clone this repository
 
