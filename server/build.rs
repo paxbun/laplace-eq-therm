@@ -5,7 +5,6 @@ use std::env::var;
 use std::fs::File;
 use std::io::{Result, Write};
 use std::path::Path;
-use std::process::Command;
 
 fn main() -> Result<()> {
     // Set profile as an environment variable: used to build tests/import_test
@@ -22,6 +21,9 @@ fn main() -> Result<()> {
 fn link_cplusplus() {
     /* do nothing */
 }
+
+#[cfg(target_os = "linux")]
+use std::process::Command;
 
 #[cfg(target_os = "linux")]
 fn link_cplusplus() {
