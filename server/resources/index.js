@@ -135,7 +135,7 @@ async function init() {
             x: j,
             y: i,
             temp:
-              type[i][j] === "OutOfRange"
+              type[i][j] === "GroundTruth"
                 ? parseFloat(
                     prompt(`New temperature for ${next} point (${i}, ${j}):`)
                   )
