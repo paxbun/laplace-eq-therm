@@ -141,7 +141,7 @@ Then you will be able to see that the temperature information sent by the client
 
 The main algorithm implementations reside in the C++ part, not the Rust part. Go to [`Space.hh`](./server/core/Space.hh) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [`MonteCarloSpace.hh`](./server/core/MonteCarloSpace.hh) and [`MonteCarloSpace.cc`](./server/core/MonteCarloSpace.cc) to find out what each virtual function must do.
 
-After implementing your own `Space` class, go to [`Server.cc`](./server/core/Server.cc) and find the function `leth_create`. The definition of `leth_create` is as shown below:
+After implementing your own `Space` class, go to [`Config.cc`](./server/core/Config.cc) and find the function `leth_create`. The definition of `leth_create` is as shown below:
 
 ```cpp
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
