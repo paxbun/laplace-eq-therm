@@ -4,7 +4,6 @@
 #include "Server.hh"
 
 #include "Lib.hh"
-#include "MockSpace.hh"
 #include "Point.hh"
 #include <cstring>
 
@@ -37,17 +36,6 @@ Server::Server(uint16_t width, uint16_t height, std::vector<std::unique_ptr<Spac
         });
         _outputBuffers.push_back(std::vector<float>(GetBufferLength(), 0.0f));
     }
-}
-
-ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
-try
-{
-    // TODO
-    return Server::Make<MockSpace>(width, height);
-}
-catch (...)
-{
-    return nullptr;
 }
 
 #pragma endregion Creation
