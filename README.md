@@ -9,7 +9,7 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 ## Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`; see [rust-toolchain.toml](./rust-toolchain.toml))
-- [CMake](https://cmake.org/download/) 3.13.0 or higher
+- [CMake](https://cmake.org/download/) 3.12.0 or higher
 - Windows:
   - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not supported)
   - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
@@ -141,9 +141,9 @@ Then you will be able to see that the temperature information sent by the client
 
 ## How to add custom algorithm implementers
 
-The main algorithm implementations reside in the C++ part, not the Rust part. Go to [`Space.hh`](./server/core/Space.hh) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [`MonteCarloSpace.hh`](./server/core/MonteCarloSpace.hh) and [`MonteCarloSpace.cc`](./server/core/MonteCarloSpace.cc) to find out what each virtual function must do.
+The main algorithm implementations reside in the C++ part, not the Rust part. Go to [`Space.hh`](./server/core/Public/leth/Space.hh) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [`MonteCarloSpace.hh`](./server/core/Public/leth/MonteCarloSpace.hh) and [`MonteCarloSpace.cc`](./server/core/Source/MonteCarloSpace.cc) to find out what each virtual function must do.
 
-After implementing your own `Space` class, go to [`Config.cc`](./server/core/Config.cc) and find the function `leth_create`. The definition of `leth_create` is as shown below:
+After implementing your own `Space` class, go to [`Config.cc`](./server/core/Source/Config.cc) and find the function `leth_create`. The definition of `leth_create` is as shown below:
 
 ```cpp
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
