@@ -1,6 +1,6 @@
 # Laplace Equation Solver
 
-[![Build Status](https://app.travis-ci.com/paxbun/laplace-eq-therm.svg?branch=main)](https://app.travis-ci.com/paxbun/laplace-eq-therm) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a0edc7e0c867439797c2d29f8b3881a1)](https://www.codacy.com/gh/paxbun/laplace-eq-therm/dashboard?utm_source=github.com&utm_medium=referral&utm_content=paxbun/laplace-eq-therm&utm_campaign=Badge_Grade)
+[![Build Status](https://app.travis-ci.com/paxbun/laplace-eq-therm.svg?branch=main)](https://app.travis-ci.com/paxbun/laplace-eq-therm)
 
 ![Example](./Example.png)
 
