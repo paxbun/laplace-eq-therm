@@ -45,12 +45,12 @@ fn link_cplusplus() {
                 .display()
         );
     }
-    println!("cargo:rustc-link-lib=static=stdc++");
+    println!("cargo:rustc-link-lib=stdc++");
 }
 
 #[cfg(target_os = "macos")]
 fn link_cplusplus() {
-    println!("cargo:rustc-link-lib=static=c++");
+    println!("cargo:rustc-link-lib=c++");
 }
 
 fn run_cmake(source_dir: &str, target_name: &str) {
