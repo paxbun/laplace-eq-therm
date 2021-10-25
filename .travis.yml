@@ -32,6 +32,7 @@ matrix:
       os: osx
       osx_image: xcode12.5
       script:
+        - export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
         - cargo build --release --workspace
         - ./target/release/laplace-eq-therm-server
         - ./target/release/laplace-eq-therm-client
