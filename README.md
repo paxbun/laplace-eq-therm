@@ -8,7 +8,7 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 
 ## Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`; see [rust-toolchain.toml](./rust-toolchain.toml))
+- [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`. See [rust-toolchain.toml](./rust-toolchain.toml))
 - [CMake](https://cmake.org/download/) 3.12.0 or higher
 - Windows:
   - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not supported)
@@ -24,7 +24,7 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 - macOS:
   - Latest version of XCode
 
-For more details, please read [.travis.yml](./.travis.yml)
+For more details, please read [.travis.yml](./.travis.yml).
 
 ## How to build
 
