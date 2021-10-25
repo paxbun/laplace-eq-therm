@@ -15,15 +15,16 @@ Retrieves temperature information from Arduino and computes the (approximate) so
   - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
   - Latest version of [Strawberry Perl](https://strawberryperl.com/) (Required to build OpenSSL on Windows)
 - Linux:
-
   - Latest version of GCC (Building using Clang is not supported)
   - Latest version of `pkg-config`
   - Latest versions of following libraries:
     - `libudev-dev`
     - `libssl-dev`
     - `libclang`
+- macOS:
+  - Latest version of XCode
 
-- Mac (Building on Mac is not tested)
+For more details, please read [.travis.yml](./.travis.yml)
 
 ## How to build
 
@@ -41,12 +42,14 @@ sudo apt-get install pkg-config
 ```bash
 sudo apt-get install libudev-dev
 sudo apt-get install libssl-dev
+sudo apt-get install libclang-8-dev
 ```
 
-- Please install `libclang-8` or higher if `rust-bindgen` generates any error.
+### Set `bindgen` flags (Linux, macOS)
+
+This is required for Rust to parse the header files properly.
 
 ```bash
-sudo apt-get install libclang-8-dev
 export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
 ```
 
