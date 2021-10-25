@@ -12,7 +12,7 @@ void SuccessiveOverRelaxationSpace::SolveEquation(std::vector<float> const& A,
                                                   std::vector<float>&       x,
                                                   std::vector<float> const& b) noexcept
 {
-    constexpr float omega { 1.12 };
+    constexpr float omega { 1.12f };
 
     size_t const numVars { x.size() };
     for (size_t iter { 0 }; iter < 100; ++iter)
