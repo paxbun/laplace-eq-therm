@@ -21,9 +21,9 @@ char const* MonteCarloSpace::GetErrorMessage(ErrorCode errorCode) noexcept
 
 ErrorCode MonteCarloSpace::RunSimulation(Point const* input, float* output) noexcept
 {
-    for (uint16_t i { 0 }; i < height(); ++i)
+    for (uint16_t i { 0 }, iEnd { height() }; i < iEnd; ++i)
     {
-        for (uint16_t j { 0 }; j < width(); ++j)
+        for (uint16_t j { 0 }, jEnd { width() }; j < jEnd; ++j)
         {
             float sum { 0 };
             for (int repeat { 0 }; repeat < 1000; ++repeat) sum += DoMonteCarlo(input, i, j);
