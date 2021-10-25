@@ -6,12 +6,11 @@
 
 // Spaces
 #include "MonteCarloSpace.hh"
-#include "SuccessiveOverRelaxationSpace.hh"
 
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
 try
 {
-    return Server::Make<MonteCarloSpace, SuccessiveOverRelaxationSpace>(width, height);
+    return Server::Make<MonteCarloSpace>(width, height);
 }
 catch (...)
 {
