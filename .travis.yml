@@ -7,7 +7,7 @@ matrix:
         - choco install strawberryperl
         - choco install cmake
         - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
-        - choco install llvm
+        - choco install llvm --version 11.1.0
       script:
         - export PATH=$MSBUILD_PATH:$PATH
         - cargo build --release --workspace
