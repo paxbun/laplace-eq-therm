@@ -150,7 +150,10 @@ Then you will be able to see that the temperature information sent by the client
 
 ## How to add custom algorithm implementers
 
-The main algorithm implementations reside in the C++ part, not the Rust part. Go to [`Space.hh`](./server/core/Public/leth/Space.hh) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [`MonteCarloSpace.hh`](./server/core/Public/leth/MonteCarloSpace.hh) and [`MonteCarloSpace.cc`](./server/core/Source/MonteCarloSpace.cc) to find out what each virtual function must do.
+The main algorithm implementations reside in the C++ part, not the Rust part. Go to [`Space.hh`](./server/core/Public/leth/Space.hh) and see the definition of `Space`. `Space` is a class which represents an algorithm implementer. Refer to [`MonteCarloSpace.hh`](./server/core/Public/leth/MonteCarloSpace.hh) and [`MonteCarloSpace.cc`](./server/core/Source/MonteCarloSpace.cc) to find out what each virtual function must do. Currently, there are two `Space`s implemented as follows:
+
+- MonteCarloSpace([Header](./server/core/Public/leth/MonteCarloSpace.hh)/[Source](./server/core/Source/MonteCarloSpace.cc))
+- SuccessiveOverRelaxationSpace([Header](./server/core/Public/leth/SuccessiveOverRelaxationSpace.hh)/[Source](./server/core/Source/SuccessiveOverRelaxationSpace.cc))
 
 After implementing your own `Space` class, go to [`Config.cc`](./server/core/Source/Config.cc) and find the function `leth_create`. The definition of `leth_create` is as shown below:
 
