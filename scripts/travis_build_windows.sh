@@ -1,6 +1,7 @@
 # Install dependencies
 choco install strawberryperl
 choco install cmake
+choco install visualstudio2019buildtools
 
 # Build
 cargo build --release --workspace
