@@ -23,7 +23,7 @@ matrix:
         - cd build
         - cmake .. -DENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST:BOOL=ON -DCMAKE_TOOLCHAIN_FILE:PATH=$VCPKG -DCMAKE_BUILD_TYPE=Release
         - cmake --build . --config Release
-        - ctest
+        - ctest -C Release
 
     - name: Ubuntu 18.04 LTS + GCC
       os: linux
