@@ -8,11 +8,23 @@ matrix:
         - choco install cmake
         - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
         - choco install llvm --version 11.1.0
+        - git clone https://github.com/microsoft/vcpkg
+        - ./vcpkg/bootstrap-vcpkg.bat
+        - ./vcpkg/vcpkg install gtest:x64-windows
       script:
         - export PATH=$MSBUILD_PATH:$PATH
+        - export VCPKG=$(pwd)/vcpkg/scripts/buildsystems/vcpkg.cmake
         - cargo build --release --workspace
+        - cargo test --release --workspace
         - ./target/release/laplace-eq-therm-server.exe
         - ./target/release/laplace-eq-therm-client.exe
+        - cd ./server/core
+        - mkdir -p build
+        - cd build
+        - cmake .. -DENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST:BOOL=ON -DCMAKE_TOOLCHAIN_FILE:PATH=$VCPKG -DCMAKE_BUILD_TYPE=Release
+        - cmake --build . --config Release
+        - ctest
+
     - name: Ubuntu 18.04 LTS + GCC
       os: linux
       dist: bionic
@@ -23,16 +35,40 @@ matrix:
         - sudo apt-get install libudev-dev
         - sudo apt-get install libssl-dev
         - sudo apt-get install libclang-8-dev
+        - git clone https://github.com/microsoft/vcpkg
+        - ./vcpkg/bootstrap-vcpkg.sh
+        - ./vcpkg/vcpkg install gtest
       script:
         - export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
+        - export VCPKG=$(pwd)/vcpkg/scripts/buildsystems/vcpkg.cmake
         - cargo build --release --workspace
+        - cargo test --release --workspace
         - ./target/release/laplace-eq-therm-server
         - ./target/release/laplace-eq-therm-client
+        - cd ./server/core
+        - mkdir -p build
+        - cd build
+        - cmake .. -DENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST:BOOL=ON -DCMAKE_TOOLCHAIN_FILE:PATH=$VCPKG -DCMAKE_BUILD_TYPE=Release
+        - cmake --build . --config Release
+        - ctest
     - name: macOS Big Sur + Clang
       os: osx
       osx_image: xcode12.5
+      install:
+        - sh install_vcpkg.sh
+        - git clone https://github.com/microsoft/vcpkg
+        - ./vcpkg/bootstrap-vcpkg.sh
+        - ./vcpkg/vcpkg install gtest
       script:
         - export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
+        - export VCPKG=$(pwd)/vcpkg/scripts/buildsystems/vcpkg.cmake
         - cargo build --release --workspace
+        - cargo test --release --workspace
         - ./target/release/laplace-eq-therm-server
         - ./target/release/laplace-eq-therm-client
+        - cd ./server/core
+        - mkdir -p build
+        - cd build
+        - cmake .. -DENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST:BOOL=ON -DCMAKE_TOOLCHAIN_FILE:PATH=$VCPKG -DCMAKE_BUILD_TYPE=Release
+        - cmake --build . --config Release
+        - ctest
