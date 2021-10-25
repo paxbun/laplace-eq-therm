@@ -16,13 +16,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(
     laplace-eq-therm-server-core
-    ${CMAKE_SOURCE_DIR}/Config.cc
-    ${CMAKE_SOURCE_DIR}/Server.cc
+    ${CMAKE_SOURCE_DIR}/Source/Config.cc
+    ${CMAKE_SOURCE_DIR}/Source/Server.cc
 
     # Spaces
-    ${CMAKE_SOURCE_DIR}/MatrixSpace.cc
-    ${CMAKE_SOURCE_DIR}/MonteCarloSpace.cc
-    ${CMAKE_SOURCE_DIR}/SuccessiveOverRelaxationSpace.cc
+    ${CMAKE_SOURCE_DIR}/Source/MatrixSpace.cc
+    ${CMAKE_SOURCE_DIR}/Source/MonteCarloSpace.cc
+    ${CMAKE_SOURCE_DIR}/Source/SuccessiveOverRelaxationSpace.cc
+)
+
+target_include_directories(
+    laplace-eq-therm-server-core
+    PUBLIC ${CMAKE_SOURCE_DIR}/Public
 )
 
 install(
@@ -46,7 +51,7 @@ if (ENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST)
         string(REGEX REPLACE "([^-])([A-Z][a-z]+)" "\\1-\\2" EXE_NAME "${EXE_NAME}")
         string(TOLOWER "${EXE_NAME}" EXE_NAME)
         
-        add_executable(${EXE_NAME} "Tests/${FILE_NAME}.cc")
+        add_executable(${EXE_NAME} "${CMAKE_SOURCE_DIR}/Tests/${FILE_NAME}.cc")
         target_link_libraries(${EXE_NAME} GTest::gtest_main laplace-eq-therm-server-core)
         add_test(NAME ${TEST_NAME} COMMAND ${EXE_NAME})
         

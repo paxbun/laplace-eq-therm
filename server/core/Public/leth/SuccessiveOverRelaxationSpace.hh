@@ -4,7 +4,8 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_SUCCESSIVE_OVER_RELAXATION_SPACE_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_SUCCESSIVE_OVER_RELAXATION_SPACE_HH
 
-#include "MatrixSpace.hh"
+#include <leth/MatrixSpace.hh>
+
 #include <vector>
 
 class SuccessiveOverRelaxationSpace : public MatrixSpace

@@ -4,8 +4,9 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_SERVER_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_SERVER_HH
 
-#include "IntegerTypes.hh"
-#include "Space.hh"
+#include <leth/IntegerTypes.hh>
+#include <leth/Space.hh>
+
 #include <atomic>
 #include <cstdint>
 #include <deque>

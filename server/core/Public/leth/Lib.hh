@@ -4,8 +4,9 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_LIB_HH
 
-#include "IntegerTypes.hh"
-#include "Point.hh"
+#include <leth/IntegerTypes.hh>
+#include <leth/Point.hh>
+
 #include <cstdint>
 
 using ServerHandle = void*;

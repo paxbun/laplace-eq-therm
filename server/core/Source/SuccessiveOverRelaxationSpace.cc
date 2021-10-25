@@ -1,7 +1,7 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#include "SuccessiveOverRelaxationSpace.hh"
+#include <leth/SuccessiveOverRelaxationSpace.hh>
 
 char const* SuccessiveOverRelaxationSpace::GetName() noexcept
 {

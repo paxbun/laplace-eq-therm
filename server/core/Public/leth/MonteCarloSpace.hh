@@ -4,7 +4,8 @@
 #ifndef LAPLACE_EQ_THERM_SERVER_CORE_MONTE_CARLO_SPACE_HH
 #define LAPLACE_EQ_THERM_SERVER_CORE_MONTE_CARLO_SPACE_HH
 
-#include "Space.hh"
+#include <leth/Space.hh>
+
 #include <random>
 
 class MonteCarloSpace : public Space

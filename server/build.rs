@@ -14,7 +14,7 @@ fn main() -> Result<()> {
     // Configure and build the CMake project
     run_cmake("core", "laplace-eq-therm-server-core");
     // Generate bindings from core/Lib.hh
-    generate_bindings("core/Lib.hh")
+    generate_bindings("./core/Public/leth/Lib.hh", "-I./core/Public")
 }
 
 #[cfg(target_os = "windows")]
@@ -78,10 +78,11 @@ fn run_cmake(source_dir: &str, target_name: &str) {
     println!("cargo:rustc-link-lib=static={}", target_name);
 }
 
-fn generate_bindings(header_path: &str) -> Result<()> {
+fn generate_bindings(header_path: &str, include_path: &str) -> Result<()> {
     // generate bindings
     let bindings = bindgen::Builder::default()
         .header(header_path)
+        .clang_arg(include_path)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate_comments(false)
         .generate()

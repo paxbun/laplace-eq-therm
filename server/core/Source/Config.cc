@@ -1,12 +1,12 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#include "Lib.hh"
-#include "Server.hh"
+#include <leth/Lib.hh>
+#include <leth/Server.hh>
 
 // Spaces
-#include "MonteCarloSpace.hh"
-#include "SuccessiveOverRelaxationSpace.hh"
+#include <leth/MonteCarloSpace.hh>
+#include <leth/SuccessiveOverRelaxationSpace.hh>
 
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
 try

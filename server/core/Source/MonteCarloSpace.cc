@@ -1,7 +1,7 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#include "MonteCarloSpace.hh"
+#include <leth/MonteCarloSpace.hh>
 
 #include <limits>
 #include <random>

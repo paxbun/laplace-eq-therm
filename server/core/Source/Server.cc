@@ -1,10 +1,10 @@
 // Copyright (c) 2021 Chanjung Kim. All rights reserved.
 // Licensed under the MIT License.
 
-#include "Server.hh"
+#include <leth/Lib.hh>
+#include <leth/Point.hh>
+#include <leth/Server.hh>
 
-#include "Lib.hh"
-#include "Point.hh"
 #include <cstring>
 
 #define CAST_SERVER()                                                                              \
