@@ -55,7 +55,6 @@ matrix:
       os: osx
       osx_image: xcode12.5
       install:
-        - sh install_vcpkg.sh
         - git clone https://github.com/microsoft/vcpkg
         - ./vcpkg/bootstrap-vcpkg.sh
         - ./vcpkg/vcpkg install gtest
