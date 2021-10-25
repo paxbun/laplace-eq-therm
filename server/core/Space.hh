@@ -6,6 +6,7 @@
 
 #include "IntegerTypes.hh"
 #include "Point.hh"
+#include <cstddef>
 #include <cstdint>
 
 /// Represents an algorithm implementer.
