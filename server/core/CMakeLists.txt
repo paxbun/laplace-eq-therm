@@ -22,6 +22,7 @@ add_library(
     # Spaces
     ${CMAKE_SOURCE_DIR}/MatrixSpace.cc
     ${CMAKE_SOURCE_DIR}/MonteCarloSpace.cc
+    ${CMAKE_SOURCE_DIR}/SuccessiveOverRelaxationSpace.cc
 )
 
 install(
