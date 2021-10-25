@@ -13,6 +13,8 @@ class SuccessiveOverRelaxationSpace : public MatrixSpace
     using MatrixSpace::MatrixSpace;
 
   protected:
+    virtual char const* GetName() noexcept override final;
+
     virtual void SolveEquation(std::vector<float> const& A,
                                std::vector<float>&       x,
                                std::vector<float> const& b) noexcept override final;

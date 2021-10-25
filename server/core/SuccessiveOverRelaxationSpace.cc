@@ -3,6 +3,11 @@
 
 #include "SuccessiveOverRelaxationSpace.hh"
 
+char const* SuccessiveOverRelaxationSpace::GetName() noexcept
+{
+    return "SOR";
+}
+
 void SuccessiveOverRelaxationSpace::SolveEquation(std::vector<float> const& A,
                                                   std::vector<float>&       x,
                                                   std::vector<float> const& b) noexcept
