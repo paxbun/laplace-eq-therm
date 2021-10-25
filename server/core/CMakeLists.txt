@@ -60,5 +60,5 @@ if (ENABLE_LAPLACE_EQ_THERM_SERVER_CORE_TEST)
         unset(TEST_NAME)
     endfunction()
 
-    # add_laplace_eq_therm_server_core_test(FooTest)
+    add_laplace_eq_therm_server_core_test(FooTest)
 endif()
