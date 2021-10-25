@@ -16,7 +16,11 @@ Retrieves temperature information from Arduino and computes the (approximate) so
   - Latest version of [Strawberry Perl](https://strawberryperl.com/) (Required to build OpenSSL on Windows)
 - Linux:
   - Latest version of GCC (Building using Clang is not supported)
-  - Latest version of `libclang`
+  - Latest version of `pkg-config`
+  - Latest versions of following libraries:
+    - `libudev-dev`
+    - `libssl-dev`
+    - `libclang`
 - Mac (Building on Mac is not tested)
 
 ## How to build
