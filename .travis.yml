@@ -13,3 +13,18 @@ matrix:
         - cargo build --release --workspace
         - ./target/release/laplace-eq-therm-server.exe
         - ./target/release/laplace-eq-therm-client.exe
+    - name: Ubuntu 18.04 LTS + GCC
+      os: linux
+      dist: bionic
+      sudo: required
+      install:
+        - sudo apt-get install build-essential
+        - sudo apt-get install pkg-config
+        - sudo apt-get install libudev-dev
+        - sudo apt-get install libssl-dev
+        - sudo apt-get install libclang-8-dev
+      script:
+        - export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
+        - cargo build --release --workspace
+        - ./target/release/laplace-eq-therm-server
+        - ./target/release/laplace-eq-therm-client
