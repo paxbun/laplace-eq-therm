@@ -70,7 +70,7 @@ function applyResultsToTable(table, width, height, temp, type) {
   for (let i = 0; i < height; ++i) {
     for (let j = 0; j < width; ++j) {
       const cellElem = table[i][j];
-      const cellValue = temp[i][j];
+      const cellValue = parseFloat(temp[i][j]);
       const cellColor = temperatureToColor(cellValue, min, max);
 
       while (cellElem.firstChild !== null)
