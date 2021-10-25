@@ -1,5 +1,7 @@
 # Laplace Equation Solver
 
+![Travis CI Status](https://app.travis-ci.com/paxbun/laplace-eq-therm.svg?branch=main)
+
 ![Example](./Example.png)
 
 Retrieves temperature information from Arduino and computes the (approximate) solution of the Laplace equation problem.

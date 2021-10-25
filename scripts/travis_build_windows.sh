@@ -6,5 +6,5 @@ choco install cmake
 cargo build --release --workspace
 
 # Run
-& "./target/release/laplace-eq-therm-server.exe"
-& "./target/release/laplace-eq-therm-client.exe"
+./target/release/laplace-eq-therm-server.exe
+./target/release/laplace-eq-therm-client.exe

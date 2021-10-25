@@ -3,4 +3,4 @@ matrix:
   include:
     - name: Windows Server + MSVC
       os: windows
-      script: powershell scripts/travis_build_windows.ps1
+      script: sh scripts/travis_build_windows.sh
