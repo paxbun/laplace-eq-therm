@@ -25,4 +25,9 @@ struct Point
     float     temp;
 };
 
+struct Pos
+{
+    uint16_t x, y;
+};
+
 #endif
