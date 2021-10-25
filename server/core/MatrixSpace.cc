@@ -105,7 +105,7 @@ bool MatrixSpace::BuildEquation(Point const* input) noexcept
         for (auto& offset : offsets)
         {
             auto const offsetAppliedIdx {
-                GetIndex(_i2Pos[i].x + offset[0], _i2Pos[i].y + offset[1]),
+                GetIndex(_i2Pos[i].y + offset[0], _i2Pos[i].x + offset[1]),
             };
             switch (input[offsetAppliedIdx].type)
             {
