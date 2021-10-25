@@ -1,6 +1,6 @@
 # Laplace Equation Solver
 
-![Travis CI Status](https://app.travis-ci.com/paxbun/laplace-eq-therm.svg?branch=main)
+[![Build Status](https://app.travis-ci.com/paxbun/laplace-eq-therm.svg?branch=main)](https://app.travis-ci.com/paxbun/laplace-eq-therm) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a0edc7e0c867439797c2d29f8b3881a1)](https://www.codacy.com/gh/paxbun/laplace-eq-therm/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=paxbun/laplace-eq-therm&amp;utm_campaign=Badge_Grade)
 
 ![Example](./Example.png)
 
@@ -8,40 +8,44 @@ Retrieves temperature information from Arduino and computes the (approximate) so
 
 ## Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`; see [rust-toolchain.toml](./rust-toolchain.toml))
-- [CMake](https://cmake.org/download/) 3.12.0 or higher
-- Windows:
-  - Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not supported)
-  - Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
-  - Latest version of [Strawberry Perl](https://strawberryperl.com/) (Required to build OpenSSL on Windows)
-- Linux:
-  - Latest version of GCC (Building using Clang is not supported)
-  - Latest version of `pkg-config`
-  - Latest versions of following libraries:
-    - `libudev-dev`
-    - `libssl-dev`
-    - `libclang`
-- Mac (Building on Mac is not tested)
+-   [Rust](https://www.rust-lang.org/tools/install) 1.55.0 or higher (Rust Nightly 1.57.0 is automatically configured by `cargo`; see [rust-toolchain.toml](./rust-toolchain.toml))
+
+-   [CMake](https://cmake.org/download/) 3.12.0 or higher
+
+-   Windows:
+  -   Latest version of [MSVC](https://visualstudio.microsoft.com) (Building using MinGW or Clang on Windows is not supported)
+  -   Latest version of [Clang](https://releases.llvm.org/download.html) (Required by [`rust-bindgen`](https://github.com/rust-lang/rust-bindgen), which uses `libclang`)
+  -   Latest version of [Strawberry Perl](https://strawberryperl.com/) (Required to build OpenSSL on Windows)
+
+-   Linux:
+  -   Latest version of GCC (Building using Clang is not supported)
+  -   Latest version of `pkg-config`
+  -   Latest versions of following libraries:
+    -   `libudev-dev`
+    -   `libssl-dev`
+    -   `libclang`
+
+-   Mac (Building on Mac is not tested)
 
 ## How to build
 
 ### Install the build dependencies (Linux)
 
-- Install basic development tools.
+-   Install basic development tools.
 
 ```bash
 sudo apt-get install build-essential
 sudo apt-get install pkg-config
 ```
 
-- Install some libraries used by the Rust libraries which this project is dependent on.
+-   Install some libraries used by the Rust libraries which this project is dependent on.
 
 ```bash
 sudo apt-get install libudev-dev
 sudo apt-get install libssl-dev
 ```
 
-- Please install `libclang-8` or higher if `rust-bindgen` generates any error.
+-   Please install `libclang-8` or higher if `rust-bindgen` generates any error.
 
 ```bash
 sudo apt-get install libclang-8-dev
@@ -50,19 +54,19 @@ export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
 
 ### Build the project
 
-- Clone this repository
+-   Clone this repository
 
 ```
 git clone https://github.com/paxbun/laplace-eq-therm
 ```
 
-- Build the entire project using `cargo`
+-   Build the entire project using `cargo`
 
 ```
 cargo build --workspace --release
 ```
 
-- Move to the directory where the compiled binaries are saved
+-   Move to the directory where the compiled binaries are saved
 
 ```
 cd target/release
@@ -102,15 +106,15 @@ Open a web browser and type the URL into the address bar. You must see several t
 
 Each point of the input matrix (represented as a cell in the input table) can be in one of three states:
 
-- `Boundary`: This point constitutes the boundary condition.
-- `GroundTruth`: This point does not participate in the computation of the solution of the equation. This point is to be compoared with the simulated values.
-- `OutOfRange`: This point does not participate in the computation, and its value is not considered valid.
+-   `Boundary`: This point constitutes the boundary condition.
+-   `GroundTruth`: This point does not participate in the computation of the solution of the equation. This point is to be compoared with the simulated values.
+-   `OutOfRange`: This point does not participate in the computation, and its value is not considered valid.
 
 On the website, cells in each state are displayed differently as follows:
 
-- `Boudnary`: Bold, 20px
-- `GroundTruth`: Normal, 16px
-- `OutOfRange`: Transparent
+-   `Boudnary`: Bold, 20px
+-   `GroundTruth`: Normal, 16px
+-   `OutOfRange`: Transparent
 
 To toggle between the states, just click the cell you want to change. You will be prompted for the new temperature value of that cell if needed.
 
