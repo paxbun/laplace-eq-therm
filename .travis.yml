@@ -28,3 +28,11 @@ matrix:
         - cargo build --release --workspace
         - ./target/release/laplace-eq-therm-server
         - ./target/release/laplace-eq-therm-client
+    - name: macOS Big Sur + Clang
+      language: cpp
+      os: osx
+      osx_image: xcode12.5
+      script:
+        - cargo build --release --workspace
+        - ./target/release/laplace-eq-therm-server
+        - ./target/release/laplace-eq-therm-client
