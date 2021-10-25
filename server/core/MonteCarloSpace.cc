@@ -38,7 +38,7 @@ float MonteCarloSpace::DoMonteCarlo(Point const* input, uint16_t i, uint16_t j) 
 {
     std::uniform_int_distribution<int> dist { 0, 3 };
 
-    int16_t x { j }, y { i };
+    int16_t x { static_cast<int16_t>(j) }, y { static_cast<int16_t>(i) };
     while (true)
     {
         if (!Inside(y, x))
