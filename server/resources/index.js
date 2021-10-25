@@ -117,7 +117,13 @@ const nextType = {
 };
 
 async function init() {
-  const initialResults = await getResults();
+  const initialResults = await (async () => {
+    try {
+      return await getResults();
+    } catch (e) {
+      alert("Initialization failed. Could not connect to the server.");
+    }
+  })();
   const width = initialResults.width;
   const height = initialResults.height;
 
@@ -185,9 +191,13 @@ async function init() {
       }
     }
     await sleep(1000);
-    results = await getResults();
-    type = results.info.type;
-    temp = results.info.temp;
+    try {
+      results = await getResults();
+      type = results.info.type;
+      temp = results.info.temp;
+    } catch (e) {
+      alert("Could not connect to the server.");
+    }
   }
 }
 
