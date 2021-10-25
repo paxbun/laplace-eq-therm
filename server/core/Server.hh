@@ -33,7 +33,7 @@ class Server
     {
         std::vector<std::unique_ptr<Space>> rtn;
         rtn.reserve(sizeof...(ArgsT));
-        (rtn.push_back(std::make_unique<ArgsT>()), ...);
+        (rtn.push_back(std::make_unique<ArgsT>(width, height)), ...);
 
         return new Server { width, height, std::move(rtn) };
     }

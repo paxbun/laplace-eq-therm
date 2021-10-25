@@ -209,8 +209,7 @@ void Server::CopyBufferAndRunSimulation(size_t idx, Space* space) noexcept
 
         {
             std::lock_guard<std::mutex> guard { _outputBufferLocks[idx] };
-            _outputResults[idx]
-                = space->RunSimulation(input.data(), _outputBuffers[idx].data(), _width, _height);
+            _outputResults[idx] = space->RunSimulation(input.data(), _outputBuffers[idx].data());
         }
     }
 }

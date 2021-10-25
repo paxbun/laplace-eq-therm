@@ -13,21 +13,20 @@ class MonteCarloSpace : public Space
     std::default_random_engine _eng;
 
   public:
-    MonteCarloSpace() : _eng { std::random_device {}() } {}
+    MonteCarloSpace(uint16_t width, uint16_t height) :
+        Space { width, height },
+        _eng { std::random_device {}() }
+    {}
 
   protected:
     virtual char const* GetName() noexcept override;
 
     virtual char const* GetErrorMessage(ErrorCode errorCode) noexcept override;
 
-    virtual ErrorCode RunSimulation(Point const* input,
-                                    float*       output,
-                                    uint16_t     width,
-                                    uint16_t     height) noexcept override;
+    virtual ErrorCode RunSimulation(Point const* input, float* output) noexcept override;
 
   private:
-    float
-    DoMonteCarlo(Point const* input, int16_t width, int16_t height, int16_t x, int16_t y) noexcept;
+    float DoMonteCarlo(Point const* input, uint16_t i, uint16_t j) noexcept;
 };
 
 #endif

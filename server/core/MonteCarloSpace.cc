@@ -19,39 +19,32 @@ char const* MonteCarloSpace::GetErrorMessage(ErrorCode errorCode) noexcept
     return "Unknown error";
 }
 
-ErrorCode MonteCarloSpace::RunSimulation(Point const* input,
-                                         float*       output,
-                                         uint16_t     width,
-                                         uint16_t     height) noexcept
+ErrorCode MonteCarloSpace::RunSimulation(Point const* input, float* output) noexcept
 {
-    for (uint16_t i { 0 }; i < height; ++i)
+    for (uint16_t i { 0 }; i < height(); ++i)
     {
-        for (uint16_t j { 0 }; j < width; ++j)
+        for (uint16_t j { 0 }; j < width(); ++j)
         {
             float sum { 0 };
-            for (int repeat { 0 }; repeat < 1000; ++repeat)
-                sum += DoMonteCarlo(input, width, height, j, i);
-            output[static_cast<size_t>(i) * width + j] = sum / 1000;
+            for (int repeat { 0 }; repeat < 1000; ++repeat) sum += DoMonteCarlo(input, i, j);
+            output[GetIndex(i, j)] = sum / 1000;
         }
     }
 
     return 0;
 }
 
-float MonteCarloSpace::DoMonteCarlo(Point const* input,
-                                    int16_t      width,
-                                    int16_t      height,
-                                    int16_t      x,
-                                    int16_t      y) noexcept
+float MonteCarloSpace::DoMonteCarlo(Point const* input, uint16_t i, uint16_t j) noexcept
 {
     std::uniform_int_distribution<int> dist { 0, 3 };
 
+    int16_t x { j }, y { i };
     while (true)
     {
-        size_t idx { (size_t)y * width + (size_t)x };
-        if (x < 0 || width <= x || y < 0 || height <= y)
+        if (!Inside(y, x))
             return 0.0f;
 
+        auto idx { GetIndex(y, x) };
         if (input[idx].type == PointType::Boundary)
             return input[idx].temp;
 
