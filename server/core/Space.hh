@@ -49,7 +49,7 @@ class Space
     }
 
     /// Returns the index of the element of the input and output buffer corresponding to (i, j).
-    ptrdiff_t GetIndex(int16_t i, int16_t j) const noexcept
+    ptrdiff_t GetIndex(int32_t i, int32_t j) const noexcept
     {
         return static_cast<ptrdiff_t>(i) * _width + j;
     }
@@ -61,7 +61,7 @@ class Space
     }
 
     /// Returns whether the point (i, j) is inside the matrix.
-    bool Inside(int16_t i, int16_t j) const noexcept
+    bool Inside(int32_t i, int32_t j) const noexcept
     {
         return 0 <= i && i < _width && 0 <= j && j < _height;
     }
