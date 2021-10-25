@@ -28,5 +28,7 @@ add_library(
 install(
     TARGETS laplace-eq-therm-server-core
     CONFIGURATIONS Debug Release
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
     RUNTIME DESTINATION lib
 )
