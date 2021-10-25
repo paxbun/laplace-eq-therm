@@ -14,45 +14,37 @@ class MatrixSpace : public Space
     enum class ErrorType
     {
         Success,
-        BufferAllocationFailed,
         InvalidEquation,
     };
 
   private:
-    std::vector<float> _A, _x, _b;
-    std::vector<Pos>   _pos;
+    std::vector<float>  _A, _x, _b;
+    std::vector<Pos>    _i2Pos;
+    std::vector<size_t> _pos2I;
 
   public:
-    MatrixSpace() = default;
+    MatrixSpace(uint16_t width, uint16_t height);
 
   protected:
     virtual char const* GetName() noexcept override;
 
-    virtual char const* GetErrorMessage(ErrorCode errorCode) noexcept override;
+    virtual char const* GetErrorMessage(ErrorCode errorCode) noexcept override final;
 
-    virtual ErrorCode RunSimulation(Point const* input,
-                                    float*       output,
-                                    uint16_t     width,
-                                    uint16_t     height) noexcept override;
+    virtual ErrorCode RunSimulation(Point const* input, float* output) noexcept override final;
+
+    /// Solves the equation Ax = b.
+    virtual void SolveEquation(std::vector<float> const& A,
+                               std::vector<float>&       x,
+                               std::vector<float> const& b) noexcept = 0;
 
   private:
     char const* GetErrorMessageInternal(ErrorType errorType) noexcept;
 
-    ErrorType RunSimulationInternal(Point const* input,
-                                    float*       output,
-                                    uint16_t     width,
-                                    uint16_t     height) noexcept;
+    ErrorType RunSimulationInternal(Point const* input, float* output) noexcept;
 
-    bool BuildBuffer(uint16_t width, uint16_t height) noexcept;
+    bool BuildEquation(Point const* input) noexcept;
 
-    bool BuildEquation(Point const* input, uint16_t width, uint16_t height) noexcept;
-
-    void CopyNonBoundaryPoints(Point const* input,
-                               float*       output,
-                               uint16_t     width,
-                               uint16_t     height) noexcept;
-
-    void SolveEquation(float* output, uint16_t width, uint16_t height) noexcept;
+    void CopyResults(Point const* input, float* output) noexcept;
 };
 
 #endif

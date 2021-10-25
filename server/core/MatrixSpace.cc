@@ -6,6 +6,16 @@
 #include <limits>
 #include <random>
 
+MatrixSpace::MatrixSpace(uint16_t width, uint16_t height) :
+    Space { width, height },
+    _pos2I(static_cast<size_t>(width) * height, std::numeric_limits<size_t>::max())
+{
+    _A.reserve(static_cast<size_t>(width) * width * height * height);
+    _x.reserve(static_cast<size_t>(width) * height);
+    _b.reserve(static_cast<size_t>(width) * height);
+    _i2Pos.reserve(static_cast<size_t>(width) * height);
+}
+
 char const* MatrixSpace::GetName() noexcept
 {
     return "MatrixSpace";
@@ -21,81 +31,117 @@ char const* MatrixSpace::GetErrorMessageInternal(ErrorType errorType) noexcept
     switch (errorType)
     {
     case ErrorType::Success: return "Success";
-    case ErrorType::BufferAllocationFailed: return "Failed to allocate memory for matrices";
     case ErrorType::InvalidEquation: return "Insufficient boundary condition";
     }
 
     return "Unknown error";
 }
 
-ErrorCode MatrixSpace::RunSimulation(Point const* input,
-                                     float*       output,
-                                     uint16_t     width,
-                                     uint16_t     height) noexcept
+ErrorCode MatrixSpace::RunSimulation(Point const* input, float* output) noexcept
 {
-    return static_cast<ErrorCode>(RunSimulationInternal(input, output, width, height));
+    return static_cast<ErrorCode>(RunSimulationInternal(input, output));
 }
 
 MatrixSpace::ErrorType MatrixSpace::RunSimulationInternal(Point const* input,
-                                                          float*       output,
-                                                          uint16_t     width,
-                                                          uint16_t     height) noexcept
+                                                          float*       output) noexcept
 {
-    if (!BuildBuffer(width, height))
-        return ErrorType::BufferAllocationFailed;
-
-    if (!BuildEquation(input, width, height))
+    if (!BuildEquation(input))
         return ErrorType::InvalidEquation;
 
-    CopyNonBoundaryPoints(input, output, width, height);
-    SolveEquation(output, width, height);
+    SolveEquation(_A, _x, _b);
+    CopyResults(input, output);
 
     return ErrorType::Success;
 }
 
-bool MatrixSpace::BuildBuffer(uint16_t width, uint16_t height) noexcept
-try
+bool MatrixSpace::BuildEquation(Point const* input) noexcept
 {
-    _A.reserve(static_cast<size_t>(width) * width * height * height);
-    _A.resize(0);
-    _x.reserve(static_cast<size_t>(width) * height);
-    _x.resize(0);
-    _b.reserve(static_cast<size_t>(width) * height);
-    _b.resize(0);
-    _pos.reserve(static_cast<size_t>(width) * height);
-    _pos.resize(0);
-    return true;
-}
-catch (...)
-{
-    return false;
-}
+    _A.clear();
+    _x.clear();
+    _b.clear();
+    _i2Pos.clear();
 
-bool MatrixSpace::BuildEquation(Point const* input, uint16_t width, uint16_t height) noexcept
-{
-    return false;
-}
+    constexpr int16_t offsets[4][2] {
+        { -1, 0 },
+        { 0, 1 },
+        { 1, 0 },
+        { 0, -1 },
+    };
 
-void MatrixSpace::CopyNonBoundaryPoints(Point const* input,
-                                        float*       output,
-                                        uint16_t     width,
-                                        uint16_t     height) noexcept
-{
-    for (uint16_t i { 0 }; i < height; ++i)
+    for (uint16_t i { 0 }, iEnd { height() }; i < iEnd; ++i)
     {
-        for (uint16_t j { 0 }; j < width; ++j)
+        for (uint16_t j { 0 }, jEnd { width() }; j < jEnd; ++j)
         {
-            size_t idx { static_cast<size_t>(i) * width + j };
-            switch (input[idx].type)
+            size_t const idx { GetIndex(i, j) };
+            if (input[idx].type == PointType::GroundTruth)
             {
-            case PointType::Boundary: output[idx] = 0.0f; break;
-            case PointType::GroundTruth: output[idx] = input[idx].temp; break;
+                for (auto& offset : offsets)
+                {
+                    if (!Inside(i + offset[0], j + offset[1]))
+                        return false;
+
+                    if (input[GetIndex(i + offset[0], j + offset[1])].type == PointType::OutOfRange)
+                        return false;
+                }
+
+                _pos2I[idx] = _i2Pos.size();
+                _i2Pos.push_back(Pos { static_cast<uint16_t>(j), static_cast<uint16_t>(i) });
+            }
+            else
+                _pos2I[idx] = std::numeric_limits<size_t>::max();
+        }
+    }
+
+    size_t const numVars { _i2Pos.size() };
+    _A.resize(numVars * numVars, 0.0f);
+    _x.resize(numVars, 0.0f);
+    _b.resize(numVars, 0.0f);
+
+    for (size_t i { 0 }, iEnd { _i2Pos.size() }; i < iEnd; ++i)
+    {
+        _A[i * numVars + i] = -4;
+
+        size_t const idx { GetIndex(_i2Pos[i].y, _i2Pos[i].x) };
+        for (auto& offset : offsets)
+        {
+            auto const offsetAppliedIdx {
+                GetIndex(_i2Pos[i].x + offset[0], _i2Pos[i].y + offset[1]),
+            };
+            switch (input[offsetAppliedIdx].type)
+            {
+            case PointType::Boundary:
+            {
+                _b[i] -= input[offsetAppliedIdx].temp;
+                break;
+            }
+            case PointType::GroundTruth:
+            {
+                size_t const offsetAppliedI { _pos2I[offsetAppliedIdx] };
+                _A[i * numVars + offsetAppliedI] += 1;
+                break;
+            }
             }
         }
     }
+
+    return true;
 }
 
-void MatrixSpace::SolveEquation(float* output, uint16_t width, uint16_t height) noexcept
+void MatrixSpace::CopyResults(Point const* input, float* output) noexcept
 {
-    //
+    for (size_t i { 0 }, iEnd { _i2Pos.size() }; i < iEnd; ++i)
+    {
+        size_t idx { GetIndex(_i2Pos[i].y, _i2Pos[i].x) };
+        output[idx] = _x[i];
+    }
+
+    for (uint16_t i { 0 }, iEnd { height() }; i < iEnd; ++i)
+    {
+        for (uint16_t j { 0 }, jEnd { width() }; j < jEnd; ++j)
+        {
+            size_t idx { GetIndex(i, j) };
+            if (input[idx].type == PointType::Boundary)
+                output[idx] = input[idx].temp;
+        }
+    }
 }

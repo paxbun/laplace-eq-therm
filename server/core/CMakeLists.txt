@@ -20,6 +20,7 @@ add_library(
     ${CMAKE_SOURCE_DIR}/Server.cc
 
     # Spaces
+    ${CMAKE_SOURCE_DIR}/MatrixSpace.cc
     ${CMAKE_SOURCE_DIR}/MonteCarloSpace.cc
 )
 
