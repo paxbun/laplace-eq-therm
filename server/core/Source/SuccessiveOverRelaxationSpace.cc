@@ -3,6 +3,9 @@
 
 #include <leth/SuccessiveOverRelaxationSpace.hh>
 
+#include <cmath>
+#include <cstdio>
+
 char const* SuccessiveOverRelaxationSpace::GetName() noexcept
 {
     return "SOR";
@@ -15,11 +18,12 @@ void SuccessiveOverRelaxationSpace::SolveEquation(std::vector<float> const& A,
     constexpr float omega { 1.12f };
 
     size_t const numVars { x.size() };
-    for (size_t iter { 0 }; iter < 100; ++iter)
+    for (size_t iter { 0 }; iter < 10000; ++iter)
     {
+        bool converge { true };
         for (size_t i { 0 }; i < numVars; ++i)
         {
-            float before { x[i] };
+            float const before { x[i] };
 
             x[i] = b[i];
 
@@ -30,6 +34,12 @@ void SuccessiveOverRelaxationSpace::SolveEquation(std::vector<float> const& A,
             x[i] *= omega;
             x[i] /= A[i * numVars + i];
             x[i] += (1 - omega) * before;
+
+            if (std::abs(x[i] - before) >= 0.001)
+                converge = false;
         }
+
+        if (converge)
+            break;
     }
 }
