@@ -11,7 +11,15 @@
 class MonteCarloSpace : public Space
 {
   private:
+    enum class ErrorType
+    {
+        Success,
+        InvalidEquation,
+    };
+
+  private:
     std::default_random_engine _eng;
+    std::vector<bool>          _sanityCheckVisitMap;
 
   public:
     MonteCarloSpace(uint16_t width, uint16_t height) :
@@ -27,6 +35,12 @@ class MonteCarloSpace : public Space
     virtual ErrorCode RunSimulation(Point const* input, float* output) noexcept override;
 
   private:
+    char const* GetErrorMessageInternal(ErrorType errorType) noexcept;
+
+    ErrorType RunSimulationInternal(Point const* input, float* output) noexcept;
+
+    bool CheckSanity(Point const* input, uint16_t i, uint16_t j) noexcept;
+
     float DoMonteCarlo(Point const* input, uint16_t i, uint16_t j) noexcept;
 };
 
