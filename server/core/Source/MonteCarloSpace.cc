@@ -38,18 +38,30 @@ float MonteCarloSpace::DoMonteCarlo(Point const* input, uint16_t i, uint16_t j) 
 {
     std::uniform_int_distribution<int> dist { 0, 3 };
 
+    int16_t beforeX, beforeY;
     int16_t x { static_cast<int16_t>(j) }, y { static_cast<int16_t>(i) };
     while (true)
     {
         if (!Inside(y, x))
-            return 0.0f;
+        {
+            x = beforeX;
+            y = beforeY;
+            continue;
+        }
 
         auto idx { GetIndex(y, x) };
         if (input[idx].type == PointType::Boundary)
             return input[idx].temp;
 
         if (input[idx].type == PointType::OutOfRange)
-            return 0.0f;
+        {
+            x = beforeX;
+            y = beforeY;
+            continue;
+        }
+
+        beforeX = x;
+        beforeY = y;
 
         switch (dist(_eng))
         {

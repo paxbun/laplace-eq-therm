@@ -19,9 +19,10 @@ class MatrixSpace : public Space
     };
 
   private:
-    std::vector<float>  _A, _x, _b;
-    std::vector<Pos>    _i2Pos;
-    std::vector<size_t> _pos2I;
+    std::vector<float>    _A, _x, _b;
+    std::vector<Pos>      _i2Pos;
+    std::vector<uint32_t> _i2NumNeighbors;
+    std::vector<size_t>   _pos2I;
 
   public:
     MatrixSpace(uint16_t width, uint16_t height);
