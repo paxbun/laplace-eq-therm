@@ -5,13 +5,16 @@
 #include <leth/Server.hh>
 
 // Spaces
+#include <leth/FiniteElementMethodSpace.hh>
 #include <leth/MonteCarloSpace.hh>
 #include <leth/SuccessiveOverRelaxationSpace.hh>
+
 
 ServerHandle leth_create(uint16_t width, uint16_t height) noexcept
 try
 {
-    return Server::Make<MonteCarloSpace, SuccessiveOverRelaxationSpace>(width, height);
+    return Server::Make<MonteCarloSpace, SuccessiveOverRelaxationSpace, FiniteElementMethodSpace>(
+        width, height);
 }
 catch (...)
 {

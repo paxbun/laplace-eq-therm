@@ -55,12 +55,26 @@ fn link_cplusplus() {
 
 fn run_cmake(source_dir: &str, target_name: &str) {
     let sources = [
+        // Header files
+        "FiniteElementMethodSpace.hh",
+        "IntegerTypes.hh",
         "Lib.hh",
-        "MockSpace.cc",
-        "MockSpace.hh",
-        "Server.cc",
+        "MatrixSpace.hh",
+        "MonteCarloSpace.hh",
+        "Point.hh",
         "Server.hh",
         "Space.hh",
+        "SuccessiveOverRelaxationSpace.hh",
+
+        // Source files
+        "Config.cc",
+        "FiniteElementMethodSpace.cc",
+        "MatrixSpace.cc",
+        "MonteCarloSpace.cc",
+        "Server.cc",
+        "SuccessiveOverRelaxationSpace.cc",
+
+        // CMake
         "CMakeLists.txt",
     ];
     for src in sources.iter() {

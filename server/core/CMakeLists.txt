@@ -20,6 +20,7 @@ add_library(
     ${CMAKE_SOURCE_DIR}/Source/Server.cc
 
     # Spaces
+    ${CMAKE_SOURCE_DIR}/Source/FiniteElementMethodSpace.cc
     ${CMAKE_SOURCE_DIR}/Source/MatrixSpace.cc
     ${CMAKE_SOURCE_DIR}/Source/MonteCarloSpace.cc
     ${CMAKE_SOURCE_DIR}/Source/SuccessiveOverRelaxationSpace.cc
