@@ -21,7 +21,7 @@ class MatrixSpace : public Space
   private:
     std::vector<float>    _A, _x, _b;
     std::vector<Pos>      _i2Pos;
-    std::vector<uint32_t> _i2NumNeighbors;
+    std::vector<uint32_t> _i2NumNeighboringWalls;
     std::vector<size_t>   _pos2I;
 
   public:

@@ -60,7 +60,7 @@ bool MatrixSpace::BuildEquation(Point const* input) noexcept
     _x.clear();
     _b.clear();
     _i2Pos.clear();
-    _i2NumNeighbors.clear();
+    _i2NumNeighboringWalls.clear();
 
     constexpr int16_t offsets[4][2] {
         { -1, 0 },
@@ -76,25 +76,25 @@ bool MatrixSpace::BuildEquation(Point const* input) noexcept
             size_t const idx { GetIndex(i, j) };
             if (input[idx].type == PointType::GroundTruth)
             {
-                uint32_t numNeighbors { 0 };
+                uint32_t numNeighboringWalls { 0 };
                 for (auto& offset : offsets)
                 {
                     if (!Inside(i + offset[0], j + offset[1]))
                     {
-                        --numNeighbors;
+                        ++numNeighboringWalls;
                         continue;
                     }
 
                     if (input[GetIndex(i + offset[0], j + offset[1])].type == PointType::OutOfRange)
                     {
-                        --numNeighbors;
+                        ++numNeighboringWalls;
                         continue;
                     }
                 }
 
                 _pos2I[idx] = _i2Pos.size();
+                _i2NumNeighboringWalls.push_back(numNeighboringWalls);
                 _i2Pos.push_back(Pos { static_cast<uint16_t>(j), static_cast<uint16_t>(i) });
-                _i2NumNeighbors.push_back(numNeighbors);
             }
             else
                 _pos2I[idx] = std::numeric_limits<size_t>::max();
@@ -108,11 +108,14 @@ bool MatrixSpace::BuildEquation(Point const* input) noexcept
 
     for (size_t i { 0 }, iEnd { _i2Pos.size() }; i < iEnd; ++i)
     {
-        _A[i * numVars + i] = -4 + _i2NumNeighbors[i];
+        _A[i * numVars + i] = -4 + static_cast<float>(_i2NumNeighboringWalls[i]);
 
         size_t const idx { GetIndex(_i2Pos[i].y, _i2Pos[i].x) };
         for (auto& offset : offsets)
         {
+            if (!Inside(_i2Pos[i].y + offset[0], _i2Pos[i].x + offset[1]))
+                continue;
+
             auto const offsetAppliedIdx {
                 GetIndex(_i2Pos[i].y + offset[0], _i2Pos[i].x + offset[1]),
             };
