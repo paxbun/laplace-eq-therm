@@ -39,6 +39,7 @@ matrix:
         - ./vcpkg/bootstrap-vcpkg.sh
         - ./vcpkg/vcpkg install gtest
       script:
+        - export CXX=g++
         - export BINDGEN_EXTRA_CLANG_ARGS=-std=c++17
         - export VCPKG=$(pwd)/vcpkg/scripts/buildsystems/vcpkg.cmake
         - cargo build --release --workspace
